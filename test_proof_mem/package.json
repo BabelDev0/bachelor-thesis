@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@semaphore-protocol/group": "^3.1.0",
+    "@semaphore-protocol/identity": "^3.1.0",
+    "@semaphore-protocol/proof": "^3.1.0"
+  }
+}
