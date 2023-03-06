@@ -1,0 +1,53 @@
+\documentclass[12pt, twoside]{book}
+
+% Elenco dei packages utilizzati
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{color}
+\usepackage[nottoc]{tocbibind}
+\usepackage{emptypage}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage[sorting=none,backend=bibtex]{biblatex}
+\usepackage{csquotes}
+\usepackage{pdfpages}
+\usepackage{amsmath}
+\usepackage{placeins}
+\usepackage{hyperref}
+\usepackage{footnote}
+\usepackage{import}
+% \usepackage{minted}
+\usepackage{xcolor}
+
+% page styles
+\pagestyle{fancy}
+\definecolor{LightGray}{gray}{0.9}
+% \usemintedstyle{colorful}
+
+% Bibliography
+\addbibresource{./bibliography/bibliography.bib}
+
+\begin{document}
+
+\includepdf{chapters/0.frontpage/front.pdf}
+
+\cleardoublepage
+
+\tableofcontents
+
+\phantomsection
+\listoffigures
+
+\input{chapters/1.introduction/introduction.tex}
+\input{chapters/2.wasi-in-depth/wasi-in-depth.tex}
+
+\printbibliography
+
+\end{document}
