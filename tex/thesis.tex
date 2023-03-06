@@ -23,12 +23,16 @@
 \usepackage{hyperref}
 \usepackage{footnote}
 \usepackage{import}
+
 % \usepackage{minted}
 \usepackage{xcolor}
 
 % page styles
 \pagestyle{fancy}
 \definecolor{LightGray}{gray}{0.9}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+
 % \usemintedstyle{colorful}
 
 % Bibliography
@@ -45,8 +49,8 @@
 \phantomsection
 \listoffigures
 
-\input{chapters/1.introduction/introduction.tex}
-\input{chapters/2.wasi-in-depth/wasi-in-depth.tex}
+\input{chapters/0.introduction/introduction.tex}
+\input{chapters/1.state-of-art/state-of-art.tex}
 
 \printbibliography
 

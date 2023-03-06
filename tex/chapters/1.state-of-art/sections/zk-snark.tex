@@ -1,0 +1,507 @@
+\section{zk-SNARK}
+
+L'acronimo zk-SNARK rappresenta l'espressione completa "Zero-Knowled Succinct Non-Interactive Argument of Knowledge".
+Questa tecnologia è stata introdotta per la prima volta in un articolo scientifico pubblicato nel 2013 intitolato
+"Pinocchio: Nearly Practical Verifiable Computation". Da allora, sono state apportate diverse migliorie alla tecnologia
+e sono emerse numerose applicazioni in svariati settori. Le prime applicazioni significative di zk-SNARK sono state
+implementate nel contesto della Blockchain, che rimane il settore dove la tecnologia è più conosciuta e applicata, per
+fare alcuni esempi Etherium una delle Blockchain più accreditate  ha iniziato ad implementare la tecnologia nella sua
+rete dal 2016, e il suo fondatore Vitalik Buterin ha scritto in un articolo sull’argomento: “Perhaps the most powerful
+cryptographic technology to come out of the last decade is general-purpose succinct zero knowledge proofs, usually
+called zk-SNARKs” (Forse la tecnologia crittografica più potente emersa nell'ultimo decennio è quella chiamata
+zk-SNARK).
+
+Zk-SNARK, come suggerisce il nome, rappresenta una tecnologia fondata sul protocollo crittografico zero-knowledge proof,
+il quale consente a una parte (il dimostratore) di dimostrare a un'altra (il verificatore) la veridicità di
+un'affermazione senza rivelare nessuna informazione ulteriore. Inoltre questo processo di dimostrazione, viene
+effettuato in modo da ottenere una prova, in cui sia la dimensione della prova, che il tempo necessario per verificarla
+crescono molto più lentamente rispetto al calcolo da verificare e senza la necessità di interazione bidirezionale tra le
+due parti coinvolte.
+
+Di seguito esamineremo meglio le singole parti che compongono la tecnologia zk-SNARK, analizzando i suoi componenti
+chiave per ottenere una panoramica completa e concisa.
+
+Prima di addentrarci nella descrizione delle componenti che utilizzeremo, è importante introdurre il campo di
+applicazione dei teoremi e delle proprietà che andremo a utilizzare. In particolare, nei prossimi paragrafi lavoreremo
+in un dominio di campi finiti, che è un dominio algebrico dove l'insieme dei numeri è finito e rispetta determinate
+proprietà algebriche come l'addizione, la sottrazione, la moltiplicazione e la divisione. Per le loro proprietà i campi
+finiti svolgono un importante ruolo in diversi algoritmi crittografici.
+
+\subsection{Zero-Knowledge}
+
+Come accennato precedentemente, Zero-Knowledge proof è un protocollo crittografico in cui una parte dimostra di
+conoscere una determinata informazione a un'altra parte, senza rivelare alcuna informazione aggiuntiva su di essa. Per
+esempio, se Alice vuole dimostrare a Bob di conoscere la password del suo account, senza rivelargli la password stessa,
+può utilizzare un protocollo di tipo Zero-Knowledge. In questo modo, Alice può dimostrare a Bob di sapere qual è la
+password corretta senza rivelarla, proteggendo così la sua privacy e la sicurezza del suo account. Come è possibile
+tutto questo? grazie a diverse tecniche crittografiche e tanta matematica.
+
+Formalmente le prove di tipo Zero-Knowledge non sono dimostrazioni di carattere matematico, ma probabilistiche, il che
+significa che c'è sempre una probabilità che un dimostratore scorretto riesca a dimostrare la veridicità di
+un'affermazione a un verificatore onesto. Esistono tuttavia tecniche per ridurre questa probabilità a valori piccoli a
+piacere.
+
+Il primo articolo che definisce il costrutto è “The Knowledge Complexity of Interactive Proof-Systems"\cite{10.1145/22145.22178} pubblicato nel
+1985, dove  gli autori introducono il concetto di “Zero-Knowledge proof” come un tipo di "interactive proof
+systems\cite{interactive_proof_system}" (un modello computazionale che simula lo scabio di
+messagi tra due individui) in cui il verificatore non apprende nulla oltre alla verità dell'affermazione che viene
+dimostrata.
+
+Per poter costruire un sistema Zero-Knowledge proof per una particolare affermazione abbiamo bisogno che la prova
+generata soddisfi le seguenti prorpietà :
+\begin{itemize}
+    \item \textbf{Completezza}: Se l'affermazione da dimostrare è vera, allora un verificatore onesto (cioè che segue correttamente le
+    regole del protocollo) verrà convinto della veridicità da un dimostratore onesto.
+    \item \textbf{Correttezza}: Se l'affermazione è falsa, nessun dimostatore disonesto può convincere un verificatore onesto che essa è vera, se non con una piccola
+    probabilità.
+    \item \textbf{Zero-knowledge}: se l'affermazione è vera, nessun verificatore apprende altro se non il fatto che
+    l'affermazione è vera.
+\end{itemize}
+Le tre proprietà appena viste descrivono Zero-Knowledge proof da un punto di vista formale ma per avere una visione più
+intutiva del protocollo è utile vedere il flusso di funzionamento attraverso un esempio. L’esempio in questione è tratto
+da un famoso articolo di Jean-Jacques Quisquater "How to Explain Zero-Knowledge Protocols to Your Children”\cite{10.1007/0-387-34805-0_60}  ne
+estrapolerò solo le parti esenziali alla tratazione, ma ne consiglio la lettura.
+
+L’esempio riguarda una caverna a forma di anello, nella quale è posta a metà del percoso una porta che impedisce il
+completamento del tragitto, a meno di non conoscere una parola segreta. Supponiamo l'esistenza di due parti, Peggy - che
+conosce il segreto della porta e agirà da dimostratrice - e Victor - che invece non conosce il segreto e sarà il
+verificatore. Peggy vuole dimostrare a Victor di sapere come superare la barriera senza però rivelare il segreto. Per
+fare ciò, Peggy propone a Victor di seguire una strategia: dapprima stabiliscono un nome per identificare i due percorsi
+(ad esempio, A e B), poi Victor rimane fuori dalla caverna mentre Peggy sceglie uno dei due percorsi. Dopo qualche
+minuto, Victor entra nella caverna e chiama ad alta voce il nome di uno dei due percorsi, a quel punto Peggy dovrà
+uscire dal percorso chiamato da Victor. Victor accetta la proposta, ma con una condizione: il processo dovrà essere
+ripetuto più volte. Dopo diversi tentativi, Victor si convince che Peggy conosca effettivamente il segreto per superare
+la barriera. Possiamo calcolare questa probabilità utilizzando la distribuzione binomiale, dove la probabilità di
+successo p è del 50\% e il numero totale di prove n è 10. La probabilità di indovinare correttamente tutte le 10 scelte
+di Victor è data dalla seguente formula: \(P = p^n = 0,5^{10} = 0,0009765625\)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13cm]{./chapters/1.state-of-art/images/5.alibaba-cave.png}
+    \label{fig:alibaba-cave}
+    \captionsetup{justification=centering}
+    \caption{Disegno della caverna di Ali Baba. Jean-Jacques Quisquater}
+\end{figure}
+
+L'esempio proposto è molto efficace nel far comprendere come sia possibile dimostrare il possesso o la conoscenza di un
+informazione senza rivelarla. Nell’articolo citato inoltre si prevendono diversi scenari in cui una o entrambe le parti
+potrebbero essere disoneste. Per gestire tali situazioni, è possibile applicare una procedura denominata "trusted
+setup", che verrà approfondita nelle sezioni successive.
+
+\subsection{Succinct}
+Una dimostrazione di tipo succinct che potremmo tradurre con la parola concisa, è una prova in cui sia la dimensione
+della prova che il tempo necessario per verificarla crescono molto più lentamente rispetto alla computazione da
+verificare. Ad esempio se Alice volesse provare a Bob di possedere un array composto da un milione di elementi, dove
+ogni elemento è uguale all’indice dell’array più uno.
+
+\begin{equation}
+a = [1,2,3,...,1000000]
+\end{equation}
+
+Una prova di tipo "succinct", così come definita, non può essere realizzata attraverso un processo di controllo "uno per
+uno" degli elementi dell'array. Questo perché, se così fosse, si otterrebbe un processo che richiederebbe tanto tempo e
+spazio di memoria quanto il calcolo effettuato per generare l'array. Una possibile miglioria per il calcolo puntuale
+potrebbe essere quella di campionare l'array in un punto arbitrario e controllare se l'elemento selezionato rispetta la
+regola. Dopo un singolo campionamento, il grado di fiducia di Bob rispetto ad Alice sarebbe di soli 0,0001\%, ovvero un
+milionesimo. Se in uno qualsiasi dei campionamenti effettuati Bob dovesse prelevare un numero non congruo, la
+dimostrazione verrebbe invalidata completamente senza bisogno di ulteriori controlli. È possibile aumentare il grado di
+fiducia del verificatore eseguendo più controlli, ma anche in questo caso, le prove generate da dimostratori disonesti
+in cui uno o pochi elementi sono errati all'interno dell'intera prova richiederebbero un numero eccessivo di passaggi
+per raggiungere un grado di fiducia accettabile, rendendo cosi questo secondo approccio fragile e non attuabile.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{./chapters/1.state-of-art/images/6.hope_evaluation.png}
+    \label{fig:hope-evaluation}
+    \captionsetup{justification=centering}
+    \caption{Disegno esempio di valutazione a tentativi fallita}
+\end{figure}
+
+\subsubsection{Polinomi}
+
+Per trovare una soluzione al problema, è necessario fare riferimento ai polinomi, in particolare alla tecnica
+crittografica nota come "polynomial commitments". Questa tecnica ci consente di generare delle funzioni hash per i
+polinomi, chiamate "polynomial commitment", sulle quali è ancora possibile effettuare operazioni algebriche. Ciò
+significa che possiamo eseguire operazioni sui polinomi senza conoscerli, attraverso i commitment. Inoltre, l'uso di
+questa tecnica ci fornirà notevoli vantaggi durante la fase di verifica. Infatti la possibilità di verificare le
+informazioni del dimostratore senza dover operare un controllo puntuale è possibile grazie alla proprietà descritta dal
+lemma di Schwartz-Zippel, un risultato importante in teoria della complessità computazionale e della teoria degli
+algoritmi che stabilisce una condizione sufficiente per determinare se un polinomio multivariato non nullo ha radici in
+un campo finito.
+
+Per comprendere come questo strumento possa esserci utile, partiamo da un equivalenza intuitiva: se abbiamo due polinomi
+$f(x_1,...,x_n)$ e $g(x_1,...,x_n)$, chiedersi se $f \equiv g$ è equivalente a chiedersi se 
+
+\begin{equation}
+p(x_1,...x_n) = f(x_1,...x_n)-g(x_1,...x_n) \equiv 0
+\end{equation}
+
+L'intuizione su cui possiamo basarci per capire l’utilità del lemma, è che Bob (il verificatore) abbia il polynomial
+commitment  $g(x_1,...,x_n)$ del polinomio corretto $f(x_1,...,x_n)$ e voglia verificare che Alice (il dimostratore) lo
+conosca. Possiamo per esempio immaginare un semplice protocollo dove:
+
+1. Bob sceglie un punto qualsiasi $s$ e valuta il suo polynomial commitment in $s$, $g(s_1,...,s_n)$ 2. Bob invia $s$ a
+Alice che provvederà a valutare il suo polinomio in $s$, $f(s_1,...,s_n)$ 3. Alice invia il risultato della sua
+valutazione a Bob che la confronta con il suo valore, se i valori risultato uguali Bob si convince che nel punto $s$
+Alice consce il corretto polinomio
+
+In questa fase ci potremmo chiedere quale beneficio abbiamo ottenuto passando dalla formulazione dell'array in cui
+venivano fatti campionamenti casuali, alla formulazione dei polinomi in cui vengono fatte valutazioni del polinomio in
+variabili casuali. Il beneficio è dovuto al lemma di Schwartz-Zippel, che permette di dimostrare che:
+
+prendendo un polinomio $p(x_1,...,x_n$) di grado $d > 1$ con coefficienti in un campo finto $\mathbb{K}$ e prendendo 
+$S \subset \mathbb{K}$ e $r_1,...,r_n \in S$ scelti in modo arbitrario, allora se $p(x_1,...,x_n$) non è il polinomio nullo
+abbiamo che $p(r_1,...,r_n) = 0$ con probabilità $\le \ d/|S|$
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11cm]{./chapters/1.state-of-art/images/7.schwartz_zippel_lemma.png}
+    \label{fig:schwartz-zippel-lemma}
+    \captionsetup{justification=centering}
+    \caption{Esempio applicazione del lemma di Schwartz-Zippel\cite{23-schwartz-zippel}}
+\end{figure}
+
+la conseguenza del lemma è che la probabilità di trovare una radice del polinomio in un gruppo di valori appartenenti al
+campo è inferiore o uguale al rapporto tra il grado del polinomio e la cardinalità del gruppo di elementi selezionati,
+operazione molto più veloce da calcolare di un controllo puntuale. Inoltre se decidessimo di ripetere il processo di
+selezione degli $r_1,...,r_n \in S$ un numero k di volte otterremo che la probabilità che $p(r^k_1,...,r^k_n) = 0$
+sarebbe obbligatoriamente $\le \ (d/|S|)^k$  e per valori di S abbastanza grandi il il rapporto tende molto velocemente
+a 0. Intuitivamente il lemma ci dimostra che se un'equazione che coinvolge alcuni polinomi è vera in una coordinata
+selezionata arbitrariamente, allora è quasi certamente vera per i polinomio nel suo insieme.
+
+\subsubsection{Come calcolare i polinomi}
+
+Una volta compreso il vantaggio nell'affrontare la nostra computazione mediante l'utilizzo di polinomi, possiamo
+procedere alla descrizione del processo che ci permette di ottenere questi polinomi.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{./chapters/1.state-of-art/images/8.comp_qap.png}
+    \label{fig:comp-qap}
+    \captionsetup{justification=centering}
+    \caption{Passi da compiere per passare dalla Computazione alla rappresentazione polinomiale}
+\end{figure}
+
+Per illustrare in dettaglio i passaggi che conducono dalla Computazione alla rappresentazione polinomiale desiderata,
+ovvero la QAP (Quadratic Arithmetic Programs), utilizzerò un compilatore scritto in Rust chiamato "circom”\footnote{\url{https://docs.circom.io/}}
+
+1. La prima fase, ovvero il passaggio dalla computazione al circuito algebrico, può essere un processo non immediato,
+soprattutto quando si tratta di computazioni articolate.A titolo di esempio, consideriamo la computazione $2*x^2=18$ con
+l'ovvia soluzione da dimostrare $x=3$. Per ottenere un circuito algebrico a partire da questa computazione, si può
+procedere come segue:
+    
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13cm]{./chapters/1.state-of-art/images/9.comp_circ.png}
+    \label{fig:comp-circ}
+    \captionsetup{justification=centering}
+    \caption{Codice esemplificativo per la creazione di un circuito algebrico}
+\end{figure}
+    
+2. Ora dobbiamo trasformare il nostro circuito aritmetico in un formato chiamato R1CS, R1CS è un formato in cui ogni
+vincolo (gate del circuito) viene trasformato in una terna di vettori (a,b,c) e sul quale viene calcolato un vettore
+chiamo s che rappresenta la soluzione del sistema di vincoli R1CS, il vettore s è costruito in tal modo Successivamente,
+è necessario trasformare il circuito aritmetico in un formato chiamato R1CS. R1CS è un formato in cui ogni vincolo (gate
+del circuito) viene rappresentato da una terna di vettori $(a,b,c)$. Viene anche calcolato un vettore chiamato $s$, che
+rappresenta la soluzione del sistema di vincoli R1CS. Il vettore $s$ è costruito nel seguente modo:
+    
+$$
+s \cdot a * s \cdot  b - s \cdot  c = 0
+$$
+    
+dove con il simbolo $\cdot$  di intende il prodotto scalare. quindi dal circuito precedente possiamo calcolare le
+terne di vettori $(a,b,c)$ per i due gate
+
+\begin{gather*}
+    A =
+    \begin{bmatrix}
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \
+    \end{bmatrix}
+    \qquad
+    B =
+    \begin{bmatrix}
+    0 & 1 & 0 & 0 \\
+    2 & 0 & 0 & 0 \
+    \end{bmatrix}
+    \qquad
+    C =
+    \begin{bmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0 \
+    \end{bmatrix}
+\end{gather*}
+    
+Possiamo osservare che per ognuno dei due gate del circuito, sono stati creati una terna di vettori $(a,b,c)$. Per
+quanto riguarda il vettore $s$, esso viene calcolato a partire dal vettore delle variabili, inserendo al posto di
+ogni variabile il valore assunto durante la valutazione del circuito. In questo modo, il vettore $s$ rappresenta la
+soluzione del sistema di vincoli R1CS.
+
+\begin{gather*}
+    A =
+    \begin{bmatrix}
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \
+    \end{bmatrix}
+    \qquad
+    B =
+    \begin{bmatrix}
+    0 & 1 & 0 & 0 \\
+    2 & 0 & 0 & 0 \
+    \end{bmatrix}
+    \qquad
+\end{gather*}
+
+% Vettore variabili ['~one', 'x', '~out', 'sym_1']
+% s [1, 3, 18, 9]
+
+% dove abbiamo che "sym_1" è una variabile creata per spezzare il calcolo di $2*x^2$ in due diversi vincoli più
+semplici, mentre "one" è una variabile di sistema utilizzata per effettuare operazioni algebriche. Per verificare
+che il vettore $s$ sia effettivamente una soluzione del sistema di vincoli R1CS, è possibile calcolare la formula
+precedente per ogni gate del circuito.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{./chapters/1.state-of-art/images/10.check_r1cs.png}
+    \label{fig:check-r1cs}
+    \captionsetup{justification=centering}
+    \caption{Contrllo dei vincoli R1CS}
+\end{figure}
+
+Ovviamente questa operazione di verifica per circuiti con molti gate non può essere percorribile.
+
+3. Il processo di trasformazione dal formato R1CS al formato QAP è il più complesso e richiede l'uso dell'interpolazione
+di Lagrange. L'idea principale è quella di costruire dei polinomi tali che se valutati nelle coordinate relative ai
+vincoli, restituiscano i valori dei vettori corrispondenti. Per il nostro esempio le matrici ottenute dal calcolo sono
+\begin{gather*}
+    \text{Ap} =
+    \begin{bmatrix}
+    0.0 & 0.0 \\
+    2.0 & -1.0 \\
+    0.0 & 0.0 \\
+    -1.0 & 1.0 \
+    \end{bmatrix}
+    \qquad
+    \text{Bp} =
+    \begin{bmatrix}
+    -2.0 & 2.0 \\
+    2.0 & -1.0 \\
+    0.0 & 0.0 \\
+    0.0 & 0.0 \
+    \end{bmatrix}
+    \qquad
+    \text{Cp} =
+    \begin{bmatrix}
+    0.0 & 0.0 \\
+    0.0 & 0.0 \\
+    -1.0 & 1.0 \\
+    2.0 & -1.0 \
+    \end{bmatrix}
+\end{gather*}    
+dove ogni riga delle matrici rappresenta i coefficienti di un polinomio, questi polinomi sono costruiti in modo tale
+che valutando i polinomi in x = 1 (coordinata del primo vincolo) otteniamo i valori corrispondenti ai vettori del
+primo vincolo
+\begin{gather*}
+    \text{Ap} =
+    \begin{bmatrix}
+    0.0 \\
+    1.0 \\
+    0.0 \\
+    0.0 \
+    \end{bmatrix}
+    \qquad
+    \text{Bp} =
+    \begin{bmatrix}
+    0.0 \\
+    1.0 \\
+    0.0 \\
+    0.0 \
+    \end{bmatrix}
+    \qquad
+    \text{Cp} =
+    \begin{bmatrix}
+    0.0 \\
+    0.0 \\
+    0.0 \\
+    1.0 \
+    \end{bmatrix}
+\end{gather*}
+grazie a questa formato ora se volessimo verificando i vincoli tramite la formula precedente avremmo
+
+$$
+A(x)*B(x)-C(x)=P(x)
+$$
+
+dove $P(x)$ non è obbligatoriamente il polinomio nullo, ma se la dimostrazione è corretta $P(x)$ deve avere delle
+radici in tutti le coordinate corrispondenti ai vincoli. Per verificarlo non abbiamo bisogno di controllare tutti i
+vincoli perché lavorando con i polinomi possiamo sfruttare il lemma di Schwartz-Zippel per valutare la condizione
+molto più velocemente
+    
+\subsubsection{Valutazioni sul protocollo}
+Fino ad ora abbiamo descritto un processo che ci consente di trasformare i nostri vincoli numerici in polinomi,
+permettendoci di calcolare con grande velocità e un elevato grado di certezza la validità dei vincoli imposti. Tuttavia,
+il protocollo spiegato in precedenza presenta due falle:
+
+1. Arbitrarietà : Nel secondo passaggio del protocollo, Bob condivide con Alice un punto $s$, che è stato scelto
+arbitrariamente per valutare il polinomio. Tuttavia, passando $s$ in chiaro ad Alice ci esponiamo al rischio che Alice
+costruisca un polinomio ad hoc, che soddisfi i vincoli solo nel punto specifico scelto, permettendole così di convincere
+Bob di una affermazione non vera. Ciò violerebbe il principio di correttezza dei protocolli Zero-Knowledge. 2.
+Verificabilità : la capacità di Alice di valutare correttamente il polinomio in $s$ non garantisce che essa abbia
+utilizzato effettivamente il polinomio $p$ per restituire il risultato a Bob, In altre parole, non è garantito che Alice
+abbia utilizzato il polinomio descritto dal polynomial commitment per raggiungere il risultato atteso.
+
+Per affrontare questi due problemi, vengono utilizzate altre tecniche matematiche, denominate Homomorphic Encryption per
+risolvere il primo problema e Knowledge of Coefficient (KC) Test per risolvere il secondo. In questa sede, si accennerà
+brevemente a come è possibile ottenere un Homomorphic Encryption in grado di soddisfare la proprietà di correttezza,
+mentre la trattazione del KC Test non verrà approfondita. È possibile trovare una introduzione ad entrambe le tecniche
+in questa serie di articoli: [https://electriccoin.co/blog/snark-explain/](https://electriccoin.co/blog/snark-explain/).
+
+\subsubsection*{Homomorphic Encryption}
+
+L'idea alla base dell'Homomorphic Encryption è quella di costruire un'operazione simile all'operazione di hashing con la
+proprietà di poter applicare delle operazioni aritmetiche ai valori criptati senza decifrarli, ovvero ottenere una
+funzione $E(x)$ che soddisfi tali proprietà :
+
+1. Difficoltà di inversione: Dato un  $E(x)$ sia complesso risalire a  $x$ 2. Resistenza alle collisioni: se $x \ne y
+\Rightarrow E(x) \ne E(y)$ 3. Applicazione di operazioni aritmetiche: Se si conoscono E(x) ed E(y), si può generare
+delle espressioni aritmetiche in x e y. Per esempio, si può calcolare E(x+y) da E(x) ed E(y)
+
+Utilizzando funzioni di questo tipo, è possibile che il Dimostratore e il Verificatore si scambino informazioni criptate
+che non rivelino il valore in chiaro del contenuto, ma che permettano ancora di effettuare operazioni aritmetiche su di
+esse.
+
+\subsection{Non-Interactive}
+
+Tutti i protocolli Zero-Knowledge proof esaminati analizzati funo a questo punto erano di tipo interattivo. Questo significa che per
+generare e verificare la prova, le due parti coinvolte, ovvero il verificatore e il dimostratore, devono interagire in
+modo bidirezionale. Ad esempio, nel caso della "grotta di Alibaba", Victor, il verificatore, indicava il passaggio da
+intraprendere e Peggy, il dimostratore, che “rispondeva” uscendo dalla giusta direzione; mentre nel protocollo dei
+polinomi, il verificatore forniva le coordinate del punto in cui valutare il polinomio e il dimostratore rispondeva con
+la valutazione corretta. In alcune situazioni tuttavia, può risultare vantaggioso utilizzare le cosiddette NIZKP, ovvero
+le Non-Interactive Zero-Knowledge proof, in cui il dimostratore trasmette al verificatore una prova contenente tutte le
+informazioni necessarie per la verifica, senza richiedere ulteriori interazioni tra le parti. 
+
+Questa metodologia presenta numerosi vantaggi sia in termini di prestazioni, poiché consente di costruire le prove più
+velocemente senza dover attendere la risposta e il tempo di comunicazione, sia in termini di sicurezza, in quanto
+l'assenza di uno scambio di messaggi elimina il rischio di intercettazioni da parte di individui malintenzionati.
+Inoltre, l'utilizzo di prove NIZKP potrebbe risultare obbligato in quei contesti applicativi in cui la comunicazione in
+tempo reale non è possibile. L'adozione di questo tipo di prove comporta però un aumento della complessità, poiché,
+essendo privi di interazione, tutto il lavoro di generazione e preparazione alla verifica viene svolto dal dimostratore
+e affinché il dimostratore non sia arbitrariamente libero di agire, generando prove scorrette, è necessario vincolarlo
+al rispetto delle regole. 
+
+A tal fine, si utilizza una tecnica nota come "trusted set-up" che consente di generare una Common Reference String
+(CRS), ovvero un dato pubblico conosciuto sia dal dimostratore che dal verificatore usato per aggiungere casualità
+all’interno della generazione della prova. Sempre riferendoci ai due esempi precedenti, la CRS ottenuta tramite un
+trusted set-up consentirebbe di rendere le scelte di Victor nella caverna il più casuali possibile, impedendo ad Alice
+di individuare dei pattern o a entrambi di collaborare per ingannare un terzo osservatore e nel caso dei polinomi,
+invece, consentirebbe di rendere aleatoria la scelta del punto in cui valutare il polinomio. 
+
+La procedura di costruzione della CRS rappresenta un passaggio critico per la robustezza del protocollo e dipende
+fortemente dal tipo di cerimonia di trusted set-up scelta.
+
+\subsubsection{Modello di affidabilità}
+
+Una cerimonia di trusted set-up è una procedura che viene eseguita una sola volta per generare un CRS che poi potrà
+essere utilizzata ogni volta che viene eseguito il protocollo. Il termine "trusted" deriva dal fatto che una o più di
+persone devono partecipare alla cerimonia in modo “fidato” contribuendo alla creazione della CRS con dei segreti anche
+chiamati “toxic waste” che non appena inseriti nella procedura dovranno essere eliminati. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13cm]{./chapters/1.state-of-art/images/11.trusted_setups.png}
+    \label{fig:trusted_setups}
+    \captionsetup{justification=centering}
+    \caption{immaggine generica di una cerimonia di trusted set-up. presa da \cite{how-do-trusted-setups-work}}
+\end{figure}
+
+Una volta completata l'elaborazione e dopo aver eliminato i segreti, il risultato dell'elaborazione (la CRS) diventa
+irreversibile e non può essere riprodotto volontariamente, il che garantisce la sicurezza del protocollo. Tuttavia, se
+le parti coinvolte non si comportano in modo leale e conservano o pubblicano i loro segreti, la validità della cerimonia
+dipenderà dal modello di affidabilità utilizzato dall'algoritmo di trusted set-up. 
+
+Poiché i protocolli operano in diversi domini applicativi, non tutti utilizzano lo stesso modello di affidabilità. La
+trattazione dei vari modelli di affidabilità sarebbe lunga e non verrà spiegata qui. Tuttavia, riducendo la
+classificazione a due proprietà degli algoritmi, è possibile descrivere brevemente alcune tipologie utili per la
+trattazione successiva. Le due proprietà su cui si basa la classificazione sono il numero di parti fidate che
+partecipano alla cerimonia e il numero di parti che devono comportarsi “lealmente” per garantire la segretezza della
+CRS.
+
+In base a queste proprietà, si possono individuare tre gruppi di interesse (che non sono gli unici):
+\begin{itemize}
+    \item \textbf{1 - 1}: questo modello è simile a quello utilizzato nei servizi centralizzati, in cui ci si affida a un singolo
+    individuo fidato per la gestione dei dati. 
+    \item \textbf{N/2 - 1}: la maggior parte delle blockchain utilizza questo modello, in
+    cui il processo viene considerato valido se la maggioranza dei partecipanti rimane onesta.
+    \item \textbf{1 - N}: in questo caso, è sufficiente che almeno una delle parti rimanga onesta durante la cerimonia per garantire la segretezza della CRS.
+    Questo modello verrà analizzato in modo più approfondito successivamente.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13cm]{./chapters/1.state-of-art/images/12.trusted_models.png}
+    \label{fig:trusted_setups}
+    \captionsetup{justification=centering}
+    \caption{immaggine generica di una cerimonia di trusted set-up. presa da \cite{how-do-trusted-setups-work}}
+\end{figure}
+
+\subsubsection{MPC (multi-party computation)}
+La tecnologia MPC (multi-party computation), anche se non è stata ancora esplicitamente menzionata, è alla base dei
+trusted set-up. Infatti per generare una CRS sicura e non riproducibile, è necessario coinvolgere molte parti e
+garantire che nessuno possa ricavare informazioni sui segreti dei partecipanti o sulla CRS stessa. Per questo motivo la
+procedura non si limita a una semplice combinazione dei segreti, ma può essere vista come una "black box" che applica
+elaborazioni ai segreti in input e restituisce la CRS in output.
+
+Ogni algoritmo di MPC deve soddisfare due proprietà fondamentali:
+
+1. Nel caso in cui uno o più partecipanti disonesti decidano di rivelare il loro segreto, il protocollo MPC deve
+impedire loro di obbligare i partecipanti onesti a rivelare le loro informazioni riservate o influenzare il risultato
+finale. 2. Nessuno dei partecipanti deve essere in grado di dedurre i segreti degli altri partecipanti dagli elaborati
+del protocollo. In altre parole, il calcolo effettuato dall'algoritmo non deve fornire alcun indizio sui segreti che
+hanno portato al risultato.
+\subsubsection{Groth16}
+Groth16 è un protocollo Zero-knowledge proof proposto da Jens Groth nell’articolo “On the Size of Pairing-based Non-interactive
+Arguments”\cite{10.1007/978-3-662-49896-5_11} pubblicato nel 2016, questo protocollo è diventato motlo diffuso
+perchè è molto efficiente dal punto di vista computazionale e permette quindi di creare zk-SNARK molto performati sia in
+termini di tempo che di memoria, questa tecnologia è alla base per esempio del progetto Z-cash una criptovaluta
+cofondata da alessanro chiesa uno dei ricercatori di [articolo].
+
+Il trusted setups di Groth16 richiede due fasi distinte:
+\begin{itemize}
+    \item \textbf{1.}: Nella prima si applica una procedura di trusted set-up chiamata “power of tau” che consiste in una algoritmo MPC
+    basato sul modello di affidabilità 1-N che utilizzando le curve ellitice permette di generare una CRS. Il processo viene
+    chiamato powers of tau o Pot perchè duarnte le sue fasi vengono usate le potenze di un numero tao generalmente il 2
+    assime ai contributi dei partecipanti per generare punti casuali e ottener una CRS. il numero N di partecipati per una
+    cerimonia di tipo power of tau puo essere dell ordine del miglaio di partecipanti rendendo cosi la cerimonia molto
+    sicura in quanto absta che almento uno di essi mantenga il segreto per far si che la CRS rimanga valdia. Questo
+    procedimento deve essere svolto una volta sola e deve essere combinato con il processo ella fase successiva.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=15cm]{./chapters/1.state-of-art/images/13.power_of_tao.png}
+        \label{fig:trusted_setups}
+        \captionsetup{justification=centering}
+        \caption{immaggine generica di una cerimonia di trusted set-up. presa da \cite{how-do-trusted-setups-work}}
+    \end{figure}
+    \item \textbf{2.}: Nella seconda fase invece viene elaborato un trusted set-up dipendente dalla computazione che si vuole provare (o
+    meglio dipendete dal circuito). Quindi questa fase deve essere riprodotta dal dimostratore ogni volta che la
+    dimostrazione cambia. Non entrerò nei dettagli implementativi, ma in questa fase viene utilizzata la Fiat-Shamir
+    heuristic, che permette di scegliere il punto in cui valutare il polinomio che descrive la computazione senza che il
+    dimostratore possa interferire. Il punto viene scelto sulla base dei calcoli fatti per ottenere il polinomio stesso. È
+    intuitivo comprendere che se il dimostratore volesse falsificare la prova, non potrebbe farlo perché per scegliere
+    arbitrariamente il polinomio e soddisfare un determinato vincolo, dovrebbe conoscere il valore di $s$. Tuttavia, essendo
+    $s$derivato dal polinomio stesso questo non è possibile
+    \item \textbf{1 - N}: in questo caso, è sufficiente che almeno una delle parti rimanga onesta durante la cerimonia per garantire la segretezza della CRS.
+    Questo modello verrà analizzato in modo più approfondito successivamente.
+\end{itemize}
+
+Sicuramente il fatto che la robustezze della tecnologia zk-SNARK sia subordinata a una procedura cosi elaborata è uno
+svantaggio, infatti esistono, protocolli di Zero-knowledge proof che non necessitano di una fase di trust set-up
+iniziale. Bulletproof e le STARK (Scalable Transparent Arguments of Knowledge), ad esempio, non richiedono alcuna
+configurazione di questo tipo, tuttavia, le tecnologie  zk-SNARK basati su Groth16 risultano essere meglio in termini di
+efficienza.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13cm]{./chapters/1.state-of-art/images/14.diff_zk.png}
+    \label{fig:trusted_setups}
+    \captionsetup{justification=centering}
+    \caption{immaggine generica di una cerimonia di trusted set-up. presa da \cite{how-do-trusted-setups-work}}
+\end{figure}

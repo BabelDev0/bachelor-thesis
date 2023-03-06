@@ -1,0 +1,68 @@
+\chapter*{Introduzione}
+\chaptermark{Introduzione}
+\label{chap:introduction}
+
+L’implementazione di strumenti atti a combattere gli attacchi di tipo \textbf{denial of service}, sono da molto
+tempo materia di studio e di ricerca. Questi attacchi possono rappresentare una minaccia grave, soprattutto quando si
+verificano su servizi cruciali e sensibili. Per tale motivo, negli anni sono state sviluppate molte strategie diverse
+per impedire a singoli o ai gruppi di computer (noti anche come "zombie armies") di attaccare servizi o reti.
+Attualmente una delle metodologie di protezione più comuni agli attacchi \textbf{DoS} è il \textbf{Rate-limiting}, che permette
+di imporre una frequenza massima accettabile per le richieste, al fine di evitare sovraccarichi e congestionamenti delle
+risorse. In particolare, nei sistemi su larga scala, la limitazione della frequenza rappresenta uno strumento essenziale
+per garantire la disponibilità e l'integrità delle risorse e dei servizi.
+
+Un altro campo di interesse in cui si sono fatti molti progressi negli ultimi anni, grazie soprattutto all'avvento delle
+tecnologie blockchain, è stato quello dell’anonimato in rete. Con il termine anonimato in rete ci si riferisce alla
+condizione in cui, sulla base di una conoscenza parziale o totale delle interazioni di un utente in una rete, non è
+possibile risalire all'identità dell'utente stesso; permettendo un'interazione con i servizi offerti dalla rete in
+assoluta riservatezza. L'anonimato in rete presenta molteplici vantaggi, soprattutto in contesti in cui la privacy
+costituisce un requisito fondamentale, come ad esempio nelle votazioni o nelle transazioni finanziarie. Inoltre, la
+possibilità di mantenere l'anonimato può rivelarsi altrettanto utile in ambiti più diffusi, come le conversazioni online
+o i social network, garantendo la libertà di espressione e la tutela della propria sfera privata.
+
+Tuttavia, l'anonimato in rete presenta anche alcune criticità, tra cui la principale è rappresentata dalla difficoltà di
+controllo. La ragione di questa difficoltà è da individuare nel fatto che le metodologie di sicurezza a livello applicazione (pila ISO/OSI)
+generalmente si basano sull' analisi del comportamento degli utenti o dei dispositivi, nel corso del tempo, al
+fine di rilevare i pattern di attività che potrebbero suggerire la presenza di un attacco. In un contesto anonimo, in
+cui le identità degli utenti non sono tracciabili, ciò diviene notevolmente più arduo. Esistono strumenti di
+rate-limiting efficaci a livelli inferiori della pila ISO/OSI, come a livello di trasporto o di sessione. Tuttavia, la
+loro attuazione comporta alcuni svantaggi, come il rischio di limitare o bloccare numerosi indirizzi IP tradotti sotto
+una NAT, minare la privacy degli utenti disattivando protezioni utili come TLS o ancora essere elusi da
+tecniche di mascheramento, come l'IP spoofing. Per tali motivazioni, per un servizio diffuso in ambiente anonimo, non è
+possibile fare affidamento esclusivamente su questi strumenti.
+\clearpage
+La presente tesi affronta la discussione di un protocollo chiamato \textbf{RLN (Rate-Limiting Nullifier)}\footnote{\url{https://rate-limiting-nullifier.github.io/rln-docs/}} basato sulla tecnologia
+\textbf{zk-SNARK}, che permette di attuare un rate-limiting in ambiente anonimo. Il protocollo è composto da tre parti generali,
+le quali si differenziano, nei dettagli, a seconda del dominio applicativo.
+Fasi del protocollo:
+\begin{itemize}
+    \item \textbf{Registrazione}: Durante questa fase, gli utenti che desiderano accedere al servizio devono
+    registrarsi fornendo una prova del possesso di determinati requisiti. Questa prova di possesso è denominata
+    "identity commitment" e viene conservata e utilizzata nelle fasi successive del protocollo. I dati personali che
+    soddisfano i requisiti sono definiti "stake" e possono assumere forme diverse a seconda del contesto applicativo. Ad
+    esempio, possono essere costituiti da un profilo su un social network, dall'indirizzo di un portafoglio di
+    criptovalute o da un'identità digitale come lo SPID o la CIE.
+
+    Gli stake non vengono conservati dal protocollo. Alla fine della fase di registrazione, il sistma è a conoscenza
+    unicamente nel fatto che un nuovo utente anonimo che soddisfa le specifiche della registrazione è
+    stato aggiunto al servizio. La presenza di uno stake non è strettamente necessaria per la registrazione.
+    In effetti, è possibile registrarsi semplicemente creando un codice univoco e fornendolo come identity commitment.
+    Tuttavia, l'utilizzo di uno stake risulta essere molto utile al fine di prevenire attacchi Sybil, ovvero la
+    generazione di numerosi utenti malevoli da parte di un attaccante.
+    \item \textbf{Interazione}: Dopo essersi registrati, gli utenti hanno la possibilità di interagire con il servizio
+    attraverso l'invio di richieste. Ad ogni richiesta, gli utenti sono tenuti a fornire una prova di appartenenza al
+    sistema. Tale prova è generata tramite la tecnologia zk-SNARK, che consente di dimostrare al servizio che l'utente è
+    effettivamente un membro legittimo senza rivelare alcuna informazione sulla sua identità. Inoltre, il protocollo
+    consente di implementare una regola di rate-limiting, che, se non rispettata, porta l'utente a rivelare la propria
+    stake. Ciò consente di scoprire e gestire chi attua comportamenti di spam o Dos, e di procedere alla fase
+    successiva.
+    \item \textbf{Punizione}: La tipologia e il grado di punizione dipendono molto dal contesto applicativo. Ad esempio,
+    alcune punizioni o misure di "slashing" possono comportare la rimozione del membro dal gruppo, con conseguente
+    impossibilità di interagire con il sistema e perdita dell'anonimato. In presenza di una stake, è possibile
+    prevedere sanzioni più articolate, come l'inserimento dell'identità virtuale in un registro di esclusione per altri
+    servizi, o la rivelazione dell'indirizzo del portafoglio criptovalute dell'utente e il sequestro dei fondi.
+\end{itemize}
+Di seguito si cercherà di guardare a tutto tondo le tecnologie e le idee alla base di zk-SNARK e del protocollo RLN.
+Inoltre si mostrerà l'implementazione di un piccolo prototipo che utilizza questo protocollo per evitare il sovraccarico
+di risorse in un servizio basato su API.
+\clearpage
