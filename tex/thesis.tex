@@ -43,16 +43,28 @@
 \includepdf{chapters/0.frontpage/front.pdf}
 
 \cleardoublepage
+\begin{flushright}
+\thispagestyle{empty}
+\null\vspace{\stretch {1}}
+\textit{
+    “\break
+    \break
+    ”
+    \break ---.}
+\vspace{\stretch{2}}\null
+\end{flushright}
+\cleardoublepage
 
 \tableofcontents
 
 \phantomsection
 \listoffigures
 
-% \input{chapters/0.introduction/introduction.tex}
-% \input{chapters/1.state-of-art/state-of-art.tex}
+\input{chapters/0.introduction/introduction.tex}
+\input{chapters/1.state-of-art/state-of-art.tex}
 \input{chapters/2.rln-protocol/rln-protocol.tex}
+\input{chapters/3.poc/poc.tex}
+\input{chapters/4.thanks/thanks.tex}
 
-\printbibliography
-
+\printbibliography[heading=bibintoc]
 \end{document}
