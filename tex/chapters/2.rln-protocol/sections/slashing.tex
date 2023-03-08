@@ -1,13 +1,7 @@
 \section{Punizione}
-La fase di punizione o slashing varia molto a seconda del contesto applicativo e alla presenza o meno di una stake,
-ma la logica è sepre 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=12cm]{./chapters/2.rln-protocol/images/5.rln_flow.png}
-    \label{fig:rln_flow}
-    \captionsetup{justification=centering}
-    \caption{Diagramma funzionametno RLN, tratto da \cite{rln_doc}}
-\end{figure}
-
-
+L'ultima fase del protocollo consiste nella punizione dell'utente malintenzionato. Questa procedura è fortemente legata
+al contesto applicativo. L'idea generale è che se sono presenti $k$ porzioni diverse per ricostruire
+$a_0$ dalle cordinate $x$ e $y$, allora l'identità dell'utente può essere rivelata e l'utente può essere rimosso
+dall'albero di Merkle ricostruendo il suo l'identity commitment. Questo comporta
+l'azzeramento della foglia che contiene l'identity commitment dell'utente all'interno dell'albero. Inoltre, a seconda dell'applicazione,
+la chiave privata può anche essere usata per sequestrare la stake fornita dall'utente.

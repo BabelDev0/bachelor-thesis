@@ -3,12 +3,12 @@
 \addcontentsline{toc}{chapter}{Introduzione}
 \label{chap:introduction}
 
-L’implementazione di strumenti atti a combattere gli attacchi di tipo \textbf{denial of service}, sono da molto
+L’implementazione di strumenti atti a combattere gli attacchi di tipo \textbf{denial of service} (\textbf{DoS}), sono da molto
 tempo materia di studio e di ricerca. Questi attacchi possono rappresentare una minaccia grave, soprattutto quando si
 verificano su servizi cruciali e sensibili. Per tale motivo, negli anni sono state sviluppate molte strategie diverse
 per impedire a singoli o ai gruppi di computer (noti anche come "zombie armies") di attaccare servizi o reti.
-Attualmente una delle metodologie di protezione più comuni agli attacchi \textbf{DoS} è il \textbf{Rate-limiting}, che permette
-di imporre una frequenza massima accettabile per le richieste, al fine di evitare sovraccarichi e congestionamenti delle
+Attualmente una delle metodologie di protezione più comuni agli attacchi DoS è il \textbf{Rate-limiting}, che permette
+di imporre una frequenza massima accettabile, per le richieste, al fine di evitare sovraccarichi e congestionamenti delle
 risorse. In particolare, nei sistemi su larga scala, la limitazione della frequenza rappresenta uno strumento essenziale
 per garantire la disponibilità e l'integrità delle risorse e dei servizi.
 
@@ -55,7 +55,7 @@ Fasi del protocollo:
     sistema. Tale prova è generata tramite la tecnologia zk-SNARK, che consente di dimostrare al servizio che l'utente è
     effettivamente un membro legittimo senza rivelare alcuna informazione sulla sua identità. Inoltre, il protocollo
     consente di implementare una regola di rate-limiting, che, se non rispettata, porta l'utente a rivelare la propria
-    stake. Ciò consente di scoprire e gestire chi attua comportamenti di spam o Dos, e di procedere alla fase
+    identità. Ciò consente di scoprire e gestire chi attua comportamenti di spam o DoS, e di procedere alla fase
     successiva.
     \item \textbf{Punizione}: La tipologia e il grado di punizione dipendono molto dal contesto applicativo. Ad esempio,
     alcune punizioni o misure di "slashing" possono comportare la rimozione del membro dal gruppo, con conseguente
@@ -66,4 +66,3 @@ Fasi del protocollo:
 Di seguito si cercherà di guardare a tutto tondo le tecnologie e le idee alla base di zk-SNARK e del protocollo RLN.
 Inoltre si mostrerà l'implementazione di un piccolo prototipo che utilizza questo protocollo per evitare il sovraccarico
 di risorse in un servizio basato su API.
-\clearpage

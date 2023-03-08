@@ -3,28 +3,46 @@
 \label{chap:rln-protocol}
 
 Nel presente capitolo, tratteremo la discussione del protocollo RLN (Rate Limiting Nullifier), che consente la
-costruzione di regole di rate-limiting anti DoS e spam in ambiente anonimo. La prima proposta del protocollo è stata
+costruzione di regole di rate-limiting anti DoS e spam in ambiente anonimo utilizzando la tecnologia zk-SANRK. La prima proposta del protocollo è stata
 sviluppata da Barry WhiteHat, un ricercatore attivo nel campo della blockchain e delle applicazioni Zero Knowledge, nel
-seguente post: "Semaphore RLN, rate limiting nullifier for spam prevention in anonymous p2p setting". Attualmente, RLN
-fa parte di (PSE) Privacy \& Scaling Explorations, un team multidisciplinare sostenuto dalla Fondazione Ethereum, che
+seguente post: "Semaphore RLN, rate-limiting nullifier for spam prevention in anonymous p2p setting" \cite{semaphore-rln}. Attualmente, RLN
+fa parte di (PSE) Privacy \& Scaling Explorations \cite{pse}, un team multidisciplinare sostenuto dalla Fondazione Ethereum, che
 esplora nuove tecnologie Zero Knowledge e altre primitive crittografiche. Alcuni progetti di rilievo includono zk-kit,
 Interep e Semaphore. RLN è ancora un protocollo poco conosciuto, e non esistono ancora grosse implementazioni al di
 fuori del contesto di ricerca. Il progetto in stato più avanzato è relativo a un lavoro portato avanti da Vac che sta
 lavorando sull'implementazione del protocollo all'interno di Waku v2, la seconda versione di un protocollo di
 comunicazione peer-to-peer privacy-preserving in ambiente decentralizzato.
 
-Il meccanismo RLN prima di tutto impone agli utenti di generare una chiave privata che sarà utlizzata per ricavare un identity commitment utilizzando la funzione hash Poseidon. In seguito per registrarsi, gli utenti devono fornire il loro identity commitment, che viene memorizzato in una foglia dell'albero di Merkle, il quale rappresenta la struttura dati dei membri del servizio. Per evitare attacchi di tipo Sybil il protocollo dà la possibilità di richiedere agli utenti in fase di registrazione anche una "stake" ovvero un informazione di valore appartenente all'untente che sia di difficiele riproducibilità. 
+Nelle prossime sezioni, verranno dettagliate le fasi del protocollo e le tecnologie utilizzate. Tuttavia, prima di
+addentrarci, potrebbe essere utile fornire una descrizione generale e concisa del protocollo per comprendere meglio dove
+e perché vengono impiegate le tecnologie che andremo a esaminare. Il protocollo RLN è suddiviso in tre fasi. Descriveremo brevemente le prime due fasi, in quanto la terza diventa ovvia una volta compreso il funzionamento delle prime due.
 
-Per ogni interazione con l'applicazione, gli utenti devono generare una prova per dimostrare l'appatenenza all'albero di Merkle e devono rialscaire una prozione della loro chiave privata, dimostrando che si tratti effettivamente di una parte valida di essa. Durante questa procedura non vogliamo che nessuna informazione venga rilascaita oltre alla appartenenza e alal correttezza della porzione di chiave e per fare ciò sfruttiamo la tecnologia zk-SNARK
+\textbf{Regitrazione}: Questa fase consente agli utenti di registrarsi al servizio che utilizza il protocollo RLN. In
+particolare, agli utenti viene richiesto di generare una chiave privata che rappresenta il loro segreto. Le strategie
+per la generazione della chiave possono variare a seconda del contesto applicativo e possono essere correlate alla
+presenza o meno di una stake. Una volta ottenuta la chiave privata, a questa viene applicata una funzione di hash per
+generare un "identity commitment", ovvero un dato che può essere reso pubblico in quanto non consente di ricostruire la
+chiave privata, ma che ne garantisce l'identificazione univoca. Durante questa fase, l'identity commitment generato
+viene inviato al servizio, che lo inserisce in una particolare struttura dati chiamata albero di Merkle. In questo
+albero, il sistema salva e mantiene tutti gli identity commitment degli utenti registrati. La registrazione rappresenta
+una fase cruciale del protocollo, in quanto solo dopo di essa gli utenti saranno in grado di interagire con il sistema,
+generando delle Zero Knowledge proof che attestino la loro appartenenza al servizio questa prova è anche chiamata "proof
+of membership". Al fine di limitare gli attacchi DoS o Sybil, la fase di registrazione sarà molto più efficace se
+sottoposta al rispetto di determinate specifiche di difficile riproducibilità da parte degli utenti. Per questo, in
+alcuni casi, è possibile legare la chiave privata a una stake.
 
-Per evitare lo spam, RLN implementa una regola anti-spam generale in cui gli utenti non possono effettuare più di X interazioni per epoca. Questo può essere applicato utilizzando lo schema di condivisione dei segreti di Shamir per dividere la chiave segreta in n parti, e se gli utenti effettuano più interazioni di quelle consentite per epoca, la loro chiave segreta può essere ricostruita.
-
-Infine, il meccanismo RLN consente agli utenti di essere rimossi dall'albero di appartenenza da chiunque conosca la loro chiave segreta. Se si verifica un evento di spam, lo stake economico dello spammer può essere inviato al primo utente che segnala correttamente lo spammer fornendo la chiave segreta ricostruita dello spammer come prova.
-
-Prima di esaminare in dettaglio lo sviluppo delle singole parti, analizzeremo gli strumenti utilizzati dal protocollo
-per implementare le sue funzionalità.
-
+\textbf{Interazione}: Questa fase rappresenta sia quella che consente l'interazione tra gli utenti registrati e il sistema, sia quella che implementa la regola di rate limiting. La chiave privata dell'utente, prima che interagisca con il sistema, viene suddivisa in $n$ parti in modo che ad ogni interazione il sistema riveli all'utente solo una porzione della chiave. Il sistema non sarà in grado di ricostruire la chiave privata dell'utente dalle singole porzioni, a meno che queste non raggiungano un numero $k$ stabilito dalla regola di rate limiting. In caso contrario, se il sistema dispone di k parti della chiave, è in grado di ricavare l'identità dell'utente. Questo processo è attuabile grazie ad un algoritmo basato sull'interpolazione di Lagrange, chiamato Shamir Secret Sharing (SSS).
 \input{chapters/2.rln-protocol/sections/tools.tex}
+
+Dopo aver visto le tecnologie utilizzate nel protocollo RLN, è possibile procedere con la descrizione delle sue fasi.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13cm]{./chapters/2.rln-protocol/images/5.rln_flow.png}
+    \label{fig:rln_flow}
+    \captionsetup{justification=centering}
+    \caption{Diagramma funzionametno RLN, tratto da \cite{rln_doc}}
+\end{figure}
+
 \input{chapters/2.rln-protocol/sections/registration.tex}
 \input{chapters/2.rln-protocol/sections/signalling.tex}
 \input{chapters/2.rln-protocol/sections/slashing.tex}
