@@ -1,6 +1,7 @@
 import { RLN, Registry, Cache, genExternalNullifier } from 'rlnjs';
 import * as path from 'path';
 import * as fs from 'fs';
+import poseidon from 'poseidon-lite';
 
 // This assumes you have built the circom circuits and placed them into the folder ./zkeyFiles
 const zkeyFilesPath = './zkeyFiles';
@@ -43,5 +44,13 @@ const signal2 = 'This is a test signal2';
 const proof2 = await rlnInstance.generateProof(signal2, merkleProof, epoch);
 result = cache.addProof(proof2);
 console.log(result); // "added" or "breach" or "invalid"
+
+registry.slashMember(poseidon([result.secret]));
+
+const proof3 = await rlnInstance.generateProof(signal, merkleProof, epoch);
+console.log(registry.slashMember);
+proof3.publicSignals.yShare = BigInt(0);
+const proofResult2 = await RLN.verifyProof(vKey, proof3);
+console.log(proofResult2); // false
 
 console.log('DONE!');

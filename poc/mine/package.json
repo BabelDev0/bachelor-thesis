@@ -4,6 +4,8 @@
 	"description": "",
 	"main": "main.js",
 	"scripts": {
+		"client": "node client.js",
+		"server": "node server.js",
 		"start": "node main.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -11,6 +13,8 @@
 	"license": "ISC",
 	"type": "module",
 	"dependencies": {
-		"rlnjs": "^2.0.5"
+		"rlnjs": "^2.0.5",
+		"socket.io": "^4.6.1",
+		"socket.io-client": "^4.6.1"
 	}
 }
