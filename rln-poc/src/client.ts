@@ -57,23 +57,17 @@ function serializeBigInt(bigint): string {
 }
 
 async function interaction() {
-
 	const merkleProof = registry.generateMerkleProof(identityCommitment);
-	const epoch = BigInt(Math.floor(Date.now() / 10000))
-	const externalNullifier = genExternalNullifier("mio");
+	const epoch = BigInt(Math.floor(Date.now() / 10000));
+	const externalNullifier = genExternalNullifier(epoch.toString());
 	const signal1 = 'This is a test signal';
-	const signal2 = 'This is another test signal';
-	const signal3 = 'dai';
-	const signal4 = 'su';
-	const proof = await rlnInstance.generateProof(signal1, merkleProof, externalNullifier);
-	const proof2 = await rlnInstance.generateProof(signal2, merkleProof, externalNullifier);
-	const proof3 = await rlnInstance.generateProof(signal3, merkleProof, externalNullifier);
-	const proof4 = await rlnInstance.generateProof(signal4, merkleProof, externalNullifier);
-	socket.emit('interaction', proof);
-	// sleep for 1 second
-	await new Promise((resolve) => setTimeout(resolve, 1000));
-	socket.emit('interaction', proof2);
-	await new Promise((resolve) => setTimeout(resolve, 1000));
-	socket.emit('interaction', proof3);
-	// socket.emit('interaction', proof4);
+
+	for (let i = 0; i < 10000000; i++) {
+		const proof = await rlnInstance.generateProof(
+			signal1,
+			merkleProof,
+			externalNullifier
+		);
+		socket.emit('interaction', proof);
+	}
 }

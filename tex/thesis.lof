@@ -1,0 +1,49 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Diagramma funzionamento della strategia Fixed window\relax }}{12}{figure.caption.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Diagramma funzionamento della strategia Token bucket\relax }}{12}{figure.caption.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Diagramma funzionamento della strategia Leaky bucket\relax }}{13}{figure.caption.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Diagramma funzionamento della strategia Sliding window\relax }}{13}{figure.caption.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Disegno della caverna\relax }}{15}{figure.caption.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.6}{\ignorespaces Interzione tra Peggy e Victor\relax }}{16}{figure.caption.10}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.7}{\ignorespaces Disegno esempio di valutazione a tentativi fallita\relax }}{17}{figure.caption.11}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.8}{\ignorespaces Esempio applicazione del lemma di Schwartz-Zippel, tratta da \cite {23-schwartz-zippel}\relax }}{18}{figure.caption.12}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.9}{\ignorespaces Passi da seguire per ottenere un QAP\relax }}{19}{figure.caption.13}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.10}{\ignorespaces Codice esemplificativo per la creazione di un circuito algebrico\relax }}{20}{figure.caption.14}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.11}{\ignorespaces Contrllo dei vincoli R1CS\relax }}{21}{figure.caption.15}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.12}{\ignorespaces immagine generica di una cerimonia di trusted set-up. tratta da \cite {how-do-trusted-setups-work}\relax }}{24}{figure.caption.16}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.13}{\ignorespaces immagine modelli di di affidabilità, tratta da \cite {trusted-models}\relax }}{25}{figure.caption.17}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.14}{\ignorespaces immagine generica di una di power of tau. tratta da \cite {how-do-trusted-setups-work}\relax }}{26}{figure.caption.18}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.15}{\ignorespaces immagine prestazioni di tecnologie NIZKP a confronto. tratta da \cite {non_interactive_zero_knowledge_proof}\relax }}{27}{figure.caption.19}%
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Esempio struttura albero di Merkle binario\relax }}{30}{figure.caption.20}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Esempio Merkle proof\relax }}{31}{figure.caption.21}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Confronto con altri algoritmi Hash\relax }}{32}{figure.caption.22}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Rappresentazione della creazione di un nullifier, tratta da \cite {some-ways-to-use-zk-snarks-for-privacy}\relax }}{33}{figure.caption.23}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Diagramma funzionametno RLN, tratto da \cite {rln_doc}\relax }}{33}{figure.caption.24}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Grafico SSS pilinomio primo grado\relax }}{35}{figure.caption.25}%

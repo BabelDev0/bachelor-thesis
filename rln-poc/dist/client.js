@@ -75,22 +75,12 @@ function interaction() {
     return __awaiter(this, void 0, void 0, function* () {
         const merkleProof = registry.generateMerkleProof(identityCommitment);
         const epoch = BigInt(Math.floor(Date.now() / 10000));
-        const externalNullifier = (0, rlnjs_1.genExternalNullifier)("mio");
+        const externalNullifier = (0, rlnjs_1.genExternalNullifier)(epoch.toString());
         const signal1 = 'This is a test signal';
-        const signal2 = 'This is another test signal';
-        const signal3 = 'dai';
-        const signal4 = 'su';
-        const proof = yield rlnInstance.generateProof(signal1, merkleProof, externalNullifier);
-        const proof2 = yield rlnInstance.generateProof(signal2, merkleProof, externalNullifier);
-        const proof3 = yield rlnInstance.generateProof(signal3, merkleProof, externalNullifier);
-        const proof4 = yield rlnInstance.generateProof(signal4, merkleProof, externalNullifier);
-        socket.emit('interaction', proof);
-        // sleep for 1 second
-        yield new Promise((resolve) => setTimeout(resolve, 1000));
-        socket.emit('interaction', proof2);
-        yield new Promise((resolve) => setTimeout(resolve, 1000));
-        socket.emit('interaction', proof3);
-        // socket.emit('interaction', proof4);
+        for (let i = 0; i < 10000000; i++) {
+            const proof = yield rlnInstance.generateProof(signal1, merkleProof, externalNullifier);
+            socket.emit('interaction', proof);
+        }
     });
 }
 //# sourceMappingURL=client.js.map
