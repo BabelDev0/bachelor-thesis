@@ -1,0 +1,97 @@
+-----------------
+COMPILING CIRCUIT
+-----------------
+circom compiler 2.1.4
+template instances: 149
+non-linear constraints: 4795
+linear constraints: 0
+public inputs: 3
+public outputs: 3
+private inputs: 33
+private outputs: 0
+wires: 4816
+labels: 15275
+Written successfully: ./rln.r1cs
+Written successfully: ./rln.sym
+Written successfully: ./rln_js/rln.wasm
+Everything went okay, circom safe
+[INFO]  snarkJS: undefined: Loading constraints: 0/4795
+[INFO]  snarkJS: undefined: Loading map: 0/4816
+
+-----------------
+COMPILING CIRCUIT
+-----------------
+circom compiler 2.1.4
+template instances: 149
+non-linear constraints: 6739
+linear constraints: 0
+public inputs: 3
+public outputs: 3
+private inputs: 49
+private outputs: 0
+wires: 6768
+labels: 21555
+Written successfully: ./rln.r1cs
+Written successfully: ./rln.sym
+Written successfully: ./rln_js/rln.wasm
+Everything went okay, circom safe
+[INFO]  snarkJS: undefined: Loading constraints: 0/6739
+[INFO]  snarkJS: undefined: Loading map: 0/6768
+
+-----------------
+COMPILING CIRCUIT
+-----------------
+circom compiler 2.1.4
+template instances: 149
+non-linear constraints: 8683
+linear constraints: 0
+public inputs: 3
+public outputs: 3
+private inputs: 65
+private outputs: 0
+wires: 8720
+labels: 27835
+Written successfully: ./rln.r1cs
+Written successfully: ./rln.sym
+Written successfully: ./rln_js/rln.wasm
+Everything went okay, circom safe
+[INFO]  snarkJS: undefined: Loading constraints: 0/8683
+[INFO]  snarkJS: undefined: Loading map: 0/8720
+Running groth16 trusted setup
+
+---------- 16 ------------
+START16
+RLN identity commitment created: 282145171116629996270737801149964746896422817962181885783695751736429347734
+merkleProof time: 0.007s
+rln proof time: 0.789s
+rln full proof time: 0.796s
+verify root time: 0s
+verify banned time: 0s
+verify validity time: 0.237s
+verify breach time: 0.237s
+rln full verification time: 0.237s
+END16
+---------- 24 ------------
+START24
+RLN identity commitment created: 6615942931156639526581611647407442228526215280443789248789610328419595548057
+merkleProof time: 0.01s
+rln proof time: 0.811s
+rln full proof time: 0.821s
+verify root time: 0s
+verify banned time: 0s
+verify validity time: 0.236s
+verify breach time: 0.236s
+rln full verification time: 0.236s
+END24
+---------- 32 ------------
+START32
+RLN identity commitment created: 7861499236515897968524248643317086957027352488157634895581252375721026939291
+merkleProof time: 0.015s
+rln proof time: 1.031s
+rln full proof time: 1.046s
+verify root time: 0s
+verify banned time: 0s
+verify validity time: 0.235s
+verify breach time: 0.235s
+rln full verification time: 0.235s
+END32
