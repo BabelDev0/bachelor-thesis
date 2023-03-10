@@ -20,20 +20,20 @@ GitHub\footnote{\url{https://github.com/BabelDev0/bachelor-thesis/tree/master/pr
 
 \section{Tecnologie e struttura}
 Per lo sviluppo del prototipo, ho attuato la scelta di utilizzare il linguaggio di programmazione
-TypeScrip\footnote{\url{thttps://www.typescriptlang.org/}}. Questa decisione è stata presa in considerazione delle
+TypeScript\footnote{\url{thttps://www.typescriptlang.org/}}. Questa decisione è stata presa in considerazione delle
 specifiche necessità del progetto, e in particolare delle librerie sviluppate e attive per la tecnologia zk-SNARK e per
 il protocollo RLN. La struttura del progetto è una monorepo (unica repository con molteplici progetti) che contiene sia
 i dati e il codice del Server e del Client. Entrambi i componenti, utilizzano
 Node.js\footnote{\url{https://nodejs.org/en}} come ambiente di esecuzione. Infatti dopo la compilazione del codice
 TypeScript in JavaScript, il codice viene eseguito tramite il runtime Node.js. Le librerie utilizzate sono le seguenti:
 \begin{itemize}
-    \item \textbf{Circom 2 \footnote{\url{https://docs.circom.io/}}}: usata per la generazione e la compilazione dei
-    circuiti del progetto. Circom consiste di un compilatore Rust per i circuiti scritti in linguaggio Circom (omonimo
+    \item \textbf{Circom 2\footnote{\url{https://docs.circom.io/}}}: usata per la generazione e la compilazione dei
+    circuiti del progetto. Circom consiste in un compilatore Rust per i circuiti scritti in linguaggio Circom (omonimo
     della libreria). Inoltre, comprende anche diversi template di circuiti che assolvono specifiche funzioni molto utili,
     come l'implementazione della funzione di hash Poseidon.
     \item \textbf{Socket.IO\footnote{\url{https://socket.io/}}}: è una libreria JavaScript che consente di creare e
     gestire connessioni in tempo reale tra il Client e Server. Si basa sul protocollo WebSocket e permette di creare una
-    comunicazione bidirezionale tra il Client e Server implementando anche un sistema basato sugli eventi, ispirato alla
+    comunicazione bidirezionale tra Client e Server implementando anche un sistema basato sugli eventi, ispirato alla
     classe EventEmitter\footnote{\url{https://nodejs.dev/en/learn/the-nodejs-event-emitter/}} di Node.js
     \item \textbf{RLN Circuits\footnote{\url{https://github.com/privacy-scaling-explorations/rln}}}: in questa libreria
     sono preseti i circuiti che implementano le funzioni principali del protocollo RLN. In particolare, sono presenti i
