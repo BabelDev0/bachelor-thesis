@@ -1,6 +1,6 @@
 \section{Denial-of-Service (DoS)}
 
-Gli attacchi di tipo Denial-of-Service (DoS) sono una tipologia di attacchi informatici estremamente diffusi, la cui
+Gli attacchi di tipo Denial-of-Service (DoS) sono una tipologia di attacchi informatici estremamente diffusa, la cui
 frequenza è cresciuta negli anni sia in termini quantitativi che qualitativi. Questo incremento è stato determinato
 dalla relativa facilità con cui è possibile condurre un attacco di questo tipo, nonché dalle sue conseguenze, che in
 base alle contromisure adottate e alla struttura del servizio attaccato possono essere più o meno gravi. Nella tesi ci
@@ -22,7 +22,7 @@ propri usi e implicazioni.
     nuove richieste. Uno svantaggio significativo di questa strategia è la possibile concentrazione di richieste tutte in
     una porzione della finestra, rischiando un sovraccarico del servizio. Caso notevole è il caso in cui si concentrino tutte
     le richieste di una finestra al margine della fine e tutte le richieste della finestra successiva al margine dell’inizio
-    questo comporta che il sistema in una durata equivalente a quella della finestra gestisca il doppio delle richieste
+    questo comporta che il sistema in una durata equivalente a quella della finestra, gestisca il doppio delle richieste
     consentite.
     \begin{figure}[H]
         \centering
@@ -47,7 +47,7 @@ propri usi e implicazioni.
     \end{figure}
     \item \textbf{Leaky bucket}: L'idea di base è simile a quella del Token bucket ma invece di rispondere al numero di richieste
     liberando i token necessari fino a esaurimento, il tasso di elaborazione delle richieste viene regolato in modo
-    uniforme. Questo significa che quando un pacchetto di dati arriva al sistema, se il secchio è già pieno, il pacchetto
+    uniforme. Questo significa che quando un pacchetto di dati arriva al sistema, se il secchio (la struttura dati) è già pieno, il pacchetto
     viene scartato. Nel mentre ad ogni unità di tempo viene elaborata una quantità di richieste corrispondente alla velocità
     di uscita del sistema. In questo modo, il flusso di dati in uscita non supera mai una certa soglia.
     \begin{figure}[h]
@@ -58,7 +58,7 @@ propri usi e implicazioni.
         \caption{Strategia di rate-limiting: Leaky bucket}
     \end{figure}
     \item \textbf{Sliding window}: La strategia di sliding window adotta un approccio simile alla Fixed Window, ma con una differenza
-    fondamentale: esamina il tasso di richieste effettuate in un periodo di tempo continuo piuttosto che in intervalli
+    fondamentale: esamina il tasso di richieste effettuate in un periodo di tempo continuo, piuttosto che in intervalli
     fissi. Ad esempio, se il limite di richieste è fissato a 100 al minuto, la strategia prevede di controllare il numero di
     richieste effettuate nell'ultimo minuto e, nel caso superi il limite, rifiutare la richiesta. Questo approccio evita il
     potenziale sovraccarico del sistema alla fine di una finestra con un tempo prefissato, ma richiede la gestione di una
@@ -73,5 +73,5 @@ propri usi e implicazioni.
 \end{itemize}
 
 Vale la pena notare che pur essendo un metodo ampiamente utilizzato il rate-limiting da solo potrebbe risultare
-insufficiente per garantire un livello di sicurezza adeguato contro gli attacchi DoS, pertanto, è necessario adottare
-contromisure di diversa natura al fine di garantire una protezione completa.
+insufficiente per garantire un livello di sicurezza adeguato, contro gli attacchi DoS, pertanto è necessario adottare
+contromisure di diversa natura, al fine di garantire una protezione completa.
