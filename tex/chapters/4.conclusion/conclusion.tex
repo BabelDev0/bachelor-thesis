@@ -1,0 +1,47 @@
+\chapter*{Conclusioni}
+\chaptermark{Conclusioni}
+\addcontentsline{toc}{chapter}{Conclusioni}
+
+Durante l'analisi della tesi, sono stati descritti numerosi concetti e tecnologie. Abbiamo iniziato parlando degli
+attacchi DoS, e come questi rappresentino un tipologia di attacco informatico molto comune e altamente efficace. Per
+difendersi da tali attacchi, sono state sviluppate diverse strategie. La maggior parte di queste si basa sull'analisi
+del traffico di rete o sulle azioni degli utenti nel tempo, al fine di prevenire gli attacchi. Tra le numerose strategie
+anti-DoS, ci siamo focalizzati sul rate-limiting, una tecnica che si basa sulla capacità di tenere traccia delle
+richieste effettuate dagli utenti, al fine di limitare il numero di richieste consentite in un determinato intervallo di
+tempo. Indipendentemente dalla strategia scelta per applicare una soluzione di rate-limiting, il principio alla base
+consiste nel riuscire a identificare l'origine di ogni richiesta per poter associare ogni messaggio al suo mittente e
+poterlo cosi limitare. Ciò fa si che questa, come tante altre strategie anti Dos, non lavorino bene in ambiente anonimo,
+ovvero in ambienti dove poter identificare l'origine di ogni richiesta è difficile o impossibile, la spiegazione è
+immediata se non so chi si comporta male non posso punirlo.
+
+Per risolvere questo problema, durante la lettura della tesi abbiamo introdotto, una delle tecnologie più interessanti
+degli ultimi anni in ambito di crittografia e teoria dell'informazione, ovvero le Zero Knowledge Proof (ZKP) e nello
+specifico la loro versione più efficiente e non interattiva zk-SNARK. Questa tecnologia grazie a svariati principi
+matematici e teorici consente la creazione di prove "Succint", ovvero di dimensioni molto inferiori alla complessità
+dell'affermazione da dimostrare e "Non-interactive", ovvero senza la necessità che dimostratore o verificatore si
+scambino messaggi per validarle. Queste caratteristiche rendono zk-SNARK uno strumento molto utile e versatile. L'idea
+del protocollo RLN nasce proprio dalla possibilità di applicare, tramite alcuni costrutti ausiliari, la tecnologia
+zk-SNARK per creare un protocollo di rate-imiting efficace e performante in ambiente anonimo. Il prototipo sviluppato e
+esposto nel capitolo precedente dimostra come questo protocollo, compia abbondatemente il suo dovere, permettendo al
+Server di limitare i Client senza avere alcuna nozione sulla loro identità e lo fa in modo non interattivo ed efficiente
+con dimensioni e tempi ridotti.
+
+Tuttavia, dalla descrizione del prototipo e dai capitoli precedenti, è possibile notare come il protocollo RLN sia
+ancora non maturo, in quanto eredita molti degli svantaggi della tecnologia zk-SNARK. Infatti, come evidenziato nel
+capitolo dedicato alla tecnologia, il processo di sviluppo dei circuiti e la generazione delle prove è molto complesso e
+richiede un notevole dispendio di risorse. Inoltre, la robustezza della tecnologia, dipende strettamente da cerimonie
+di trusted set-up complesse e che richiedono la partecipazione di molti utenti, il che ne limita sia l'efficacia che la
+distribuzione. Recenti evoluzioni come PLONK, STARK e Bulletproof, hanno l'obbiettivo di migliorare alcuni aspetti come la scalabilità,
+la sicurezza e la complessità della tecnologia zk-SNARK, aprendo nuove opportunità di applicazione. Ciò nonostante la ricerca per una
+soluzione ottimale è ancora in corso in quanto queste tecnologie, pur non basandosi su trusted set-up, non riescono a
+competere in termini di velocità e dimensioni delle prove con la tecnologia zk-SNARK.
+
+In conclusione, la tecnologia zk-SNARK e ZKP in generale è una delle più promettenti innovazioni nel campo della
+crittografia e della privacy. Grazie alla sua capacità di dimostrare la veridicità di informazioni senza rivelarne il
+contenuto, questa tecnologia ha il potenziale per rivoluzionare molte industrie, come ad esempio quella finanziaria o
+quella sanitaria. Ci sono ancora alcune sfide da affrontare, come la riduzione dei costi computazionali e la miglior
+comprensione delle implicazioni della tecnologia sulla privacy e sulla sicurezza.
+
+In ogni caso, il protocollo RLN riesce con efficacia ad applicare un sistema di rate-limiting a livello applicazione, in
+un ambiente anonimo ed è indubbio che zk-SNARK rappresenti una tecnologia di grande interesse e potenziale, che nel
+prossimo futuro, ci si aspetta, avrà un impatto significativo su molte aree della vita quotidiana.

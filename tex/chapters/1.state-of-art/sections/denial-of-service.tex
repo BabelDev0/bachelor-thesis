@@ -1,8 +1,8 @@
 \section{Denial-of-Service (DoS)}
 
-Gli attacchi di tipo Denial-of-Service (DoS) sono una tipologia di attacchi infor- matici estremamente diffusi, la cui
+Gli attacchi di tipo Denial-of-Service (DoS) sono una tipologia di attacchi informatici estremamente diffusi, la cui
 frequenza è cresciuta negli anni sia in termini quantitativi che qualitativi. Questo incremento è stato determinato
-dalla relativa facilità con cui è possibile condurre un attacco di questo tipo, nonché dalle sue conse- guenze, che in
+dalla relativa facilità con cui è possibile condurre un attacco di questo tipo, nonché dalle sue conseguenze, che in
 base alle contromisure adottate e alla struttura del servizio attaccato possono essere più o meno gravi. Nella tesi ci
 concentreremo solamente, sull’analisi della metodologia di protezione denominate rate-limiting. Queste strategie possono
 risultare estremamente efficaci in alcune situazioni, come dimostrato dall’evento accaduto ad agosto 2022 a Google \cite{google_ddos},
@@ -29,7 +29,7 @@ propri usi e implicazioni.
         \includegraphics[width=13cm]{./chapters/1.state-of-art/images/1.fixed_window.png}
         \label{fig:fixed-window}
         \captionsetup{justification=centering}
-        \caption{Diagramma funzionamento della strategia Fixed window}
+        \caption{Strategia di rate-limiting: Fixed window}
     \end{figure}
     \item \textbf{Token bucket}: Il funzionamento del token bucket prevede che non tutte le richieste di un servizio vengano mappate
     1:1 con la richiesta di risorse, poiché alcune richieste potrebbero richiedere più risorse di altre. Per questo motivo,
@@ -43,7 +43,7 @@ propri usi e implicazioni.
         \includegraphics[width=13cm]{./chapters/1.state-of-art/images/2.token_bucket.png}
         \label{fig:token-bucket}
         \captionsetup{justification=centering}
-        \caption{Diagramma funzionamento della strategia Token bucket}
+        \caption{Strategia di rate-limiting: Token bucket}
     \end{figure}
     \item \textbf{Leaky bucket}: L'idea di base è simile a quella del Token bucket ma invece di rispondere al numero di richieste
     liberando i token necessari fino a esaurimento, il tasso di elaborazione delle richieste viene regolato in modo
@@ -55,7 +55,7 @@ propri usi e implicazioni.
         \includegraphics[width=13cm]{./chapters/1.state-of-art/images/3.leaky_bucket.png}
         \label{fig:laky-bucket}
         \captionsetup{justification=centering}
-        \caption{Diagramma funzionamento della strategia Leaky bucket}
+        \caption{Strategia di rate-limiting: Leaky bucket}
     \end{figure}
     \item \textbf{Sliding window}: La strategia di sliding window adotta un approccio simile alla Fixed Window, ma con una differenza
     fondamentale: esamina il tasso di richieste effettuate in un periodo di tempo continuo piuttosto che in intervalli
@@ -68,7 +68,7 @@ propri usi e implicazioni.
         \includegraphics[width=13cm]{./chapters/1.state-of-art/images/4.sliding_window.png}
         \label{fig:sliding-window}
         \captionsetup{justification=centering}
-        \caption{Diagramma funzionamento della strategia Sliding window}
+        \caption{Strategia di rate-limiting: Sliding window}
     \end{figure}
 \end{itemize}
 

@@ -38,12 +38,12 @@ piacere.
 
 Il primo articolo che definisce il costrutto è “The Knowledge Complexity of Interactive Proof-Systems"\cite{10.1145/22145.22178} pubblicato nel
 1985, dove  gli autori introducono il concetto di “Zero-Knowledge proof” come un tipo di "interactive proof
-systems" \cite{interactive_proof_system} (un modello computazionale che simula lo scabio di
-messagi tra due individui) in cui il verificatore non apprende nulla oltre alla verità dell'affermazione che viene
+systems" \cite{interactive_proof_system} (un modello computazionale che simula lo scambio di
+messaggi tra due individui) in cui il verificatore non apprende nulla oltre alla verità dell'affermazione che viene
 dimostrata.
 
 Per poter ottenere un sistema Zero-Knowledge proof per una particolare affermazione abbiamo bisogno che la prova
-generata soddisfi le seguenti prorpietà :
+generata soddisfi le seguenti proprietà :
 \begin{itemize}
     \item \textbf{Completezza}: Se l'affermazione da dimostrare è vera, allora un verificatore onesto (cioè che segue correttamente le
     regole del protocollo) verrà convinto della veridicità da un dimostratore onesto.
@@ -53,11 +53,11 @@ generata soddisfi le seguenti prorpietà :
     l'affermazione è vera.
 \end{itemize}
 Le tre proprietà appena viste descrivono un sistema Zero-Knowledge proof da un punto di vista formale ma per avere una visione più
-intutiva del protocollo è utile vedere il funzionamento del protocollo attraverso un esempio. L’esempio in questione è tratto
+intuitiva del protocollo è utile vedere il funzionamento del protocollo attraverso un esempio. L’esempio in questione è tratto
 da un famoso articolo di Jean-Jacques Quisquater "How to Explain Zero-Knowledge Protocols to Your Children” \cite{10.1007/0-387-34805-0_60}  ne
-estrapolerò solo le parti esenziali alla tratazione, ma ne consiglio la lettura.
+estrapolerò solo le parti essenziali alla trattazione, ma ne consiglio la lettura.
 
-L’esempio riguarda una caverna a forma di anello, nella quale è posta a metà del percoso una porta che impedisce il
+L’esempio riguarda una caverna a forma di anello, nella quale è posta a metà del percorso una porta che impedisce il
 passaggio, a meno di non conoscere una parola segreta. Supponiamo l'esistenza di due parti, Peggy - che
 conosce il segreto della porta e agirà da dimostratrice - e Victor - che invece non conosce il segreto e sarà il
 verificatore. Peggy vuole dimostrare a Victor di sapere come superare la barriera senza però rivelare il segreto. Per
@@ -68,7 +68,7 @@ fare ciò, Peggy propone a Victor di seguire una strategia: dapprima stabiliscon
     \includegraphics[width=5cm]{./chapters/1.state-of-art/images/5.1.alibaba_cave.png}
     \label{fig:alibaba-cave1}
     \captionsetup{justification=centering}
-    \caption{Disegno della caverna}
+    \caption{ZKP: Alibaba Cave}
 \end{figure}
 Dopo qualche minuto, Victor entra nella caverna e chiama ad alta voce il nome di uno dei due percorsi, a quel punto Peggy dovrà
 uscire dal percorso chiamato da Victor. 
@@ -86,10 +86,10 @@ uscire dal percorso chiamato da Victor.
         \label{fig:alibaba-cave3}
         \captionsetup{justification=centering}
     \end{subfigure}
-    \caption{Interzione tra Peggy e Victor}
+    \caption{ZKP: Interazione tra Peggy e Victor}
     \label{fig:alibaba-cave2_3}
 \end{figure}
-Victor accetta la proposta, ma con una condizione: il processo dovrà essereBob
+Victor accetta la proposta, ma con una condizione: il processo dovrà essere
 ripetuto più volte. Dopo diversi tentativi, Victor si convince che Peggy conosca effettivamente il segreto per superare
 la barriera. Possiamo calcolare questa probabilità utilizzando la distribuzione binomiale, dove la probabilità di
 successo p è del 50\% e il numero totale di prove n è 10. La probabilità di indovinare correttamente tutte le 10 scelte
@@ -127,13 +127,13 @@ per raggiungere un grado di fiducia accettabile, rendendo cosi questo secondo ap
     \includegraphics[width=9cm]{./chapters/1.state-of-art/images/6.hope_evaluation.png}
     \label{fig:hope-evaluation}
     \captionsetup{justification=centering}
-    \caption{Disegno esempio di valutazione a tentativi fallita}
+    \caption{zk-SNARK: verifica a tentativi}
 \end{figure}
 
 \subsubsection{Polinomi}
 
 Per trovare una soluzione al problema, è necessario fare riferimento ai polinomi, in particolare alla tecnica
-crittografica nota come "polynomial commitments". Questa tecnica ci consente di generare delle funzioni Hash per i
+crittografica nota come "polynomial commitments". Questa tecnica ci consente di generare delle funzioni hash per i
 polinomi, chiamate "polynomial commitment", sulle quali è ancora possibile effettuare operazioni algebriche. Ciò
 significa che possiamo eseguire operazioni sui polinomi senza conoscerli, attraverso i commitment. L'utilizzo di questa
 tecnica ci fornisce notevoli vantaggi durante la fase di verifica, Infatti la possibilità di verificare le informazioni
@@ -153,7 +153,7 @@ p(x_1,...x_n) = f(x_1,...x_n)-g(x_1,...x_n) \equiv 0
 L'intuizione su cui possiamo basarci per capire l’utilità del lemma per i nostri fini, è che Victor (il verificatore) abbia il polynomial
 commitment  $g(x_1,...,x_n)$ del polinomio corretto $f(x_1,...,x_n)$ e voglia verificare che Peggy (il dimostratore) lo
 conosca. \clearpage
-Sotto quete ipotesi possiamo immaginare un semplice protocollo di esempio dove:
+Sotto queste ipotesi possiamo immaginare un semplice protocollo di esempio dove:
 \begin{enumerate}
     \item  Victor sceglie un punto qualsiasi $s$ e valuta il suo polynomial commitment in $s$, e ottiene $g(s_1,...,s_n)$.
     \item  Victor invia $s$ a Peggy che provvederà a valutare il suo polinomio in $s$, e ottiene $f(s_1,...,s_n)$.
@@ -177,7 +177,7 @@ definizione classica di probabilità o con il lemma di Schwartz-Zippel, tuttavia
     \includegraphics[width=10cm]{./chapters/1.state-of-art/images/7.schwartz_zippel_lemma.png}
     \label{fig:schwartz-zippel-lemma}
     \captionsetup{justification=centering}
-    \caption{Esempio applicazione del lemma di Schwartz-Zippel, tratta da \cite{23-schwartz-zippel}}
+    \caption{Visuallizzazione del lemma di Schwartz-Zippel, tratta da \cite{23-schwartz-zippel}}
 \end{figure}
 \clearpage
 
@@ -199,7 +199,7 @@ procedere alla descrizione del processo che ci permette di ottenere tali polinom
     \includegraphics[width=14cm]{./chapters/1.state-of-art/images/8.comp_qap.png}
     \label{fig:comp-qap}
     \captionsetup{justification=centering}
-    \caption{Passi da seguire per ottenere un QAP}
+    \caption{Step Circuito - QAP}
 \end{figure}
 
 Per illustrare in dettaglio i passaggi che conducono dalla computazione alla rappresentazione polinomiale desiderata,
@@ -268,7 +268,7 @@ ovvero la QAP (Quadratic Arithmetic Programs), utilizzeremo un compilatore scrit
         \end{bmatrix}
     \end{gather*}
 
-    Possaimo vedere che $sym_1$ è una variabile creata per spezzare il calcolo di $2*x^2$ in due diversi vincoli più
+    Possiamo vedere che $sym_1$ è una variabile creata per spezzare il calcolo di $2*x^2$ in due diversi vincoli più
     semplici questa procedura viene chiamata "Flattening" (appiattimento), mentre $one$ è una variabile di sistema
     utilizzata per effettuare operazioni algebriche come la moltiplicazione o la somma per gli elementi del campo. Per
     verificare che il vettore $s$ sia effettivamente una soluzione del sistema di vincoli R1CS, è possibile calcolare la
@@ -279,15 +279,15 @@ ovvero la QAP (Quadratic Arithmetic Programs), utilizzeremo un compilatore scrit
         \includegraphics[width=15cm]{./chapters/1.state-of-art/images/10.check_r1cs.png}
         \label{fig:check-r1cs}
         \captionsetup{justification=centering}
-        \caption{Contrllo dei vincoli R1CS}
+        \caption{Controllo dei vincoli R1CS}
     \end{figure}
 
     Visto che il risultato dell'operazione è 0 possiamo dire che $s$ è una soluzione del sistema R1CS, e quindi che il
-    nostro valore $x=3$ che compone il vettore soluzione è corretto. Al pari del calcolo puntuale delgli esempi
+    nostro valore $x=3$ che compone il vettore soluzione è corretto. Al pari del calcolo puntuale degli esempi
     precedenti questa operazione di verifica per circuiti con molti gate non può essere percorribile.
 
     \item  Il processo di trasformazione dal formato R1CS al formato QAP è il più complesso e richiede l'utilizzo di una
-    tecnioca chiamata interpolazione di Lagrange. L'idea principale è quella di costruire dei polinomi tali che se
+    tecnica chiamata interpolazione di Lagrange. L'idea principale è quella di costruire dei polinomi tali che se
     valutati nelle coordinate relative ai vincoli, restituiscano i valori dei vettori corrispondenti. Il processo per
     ottenere i polinomi si basa su una procedura iterativa su i vettori delle matrici $A,B$ e $C$. 
     Applicando il processo al nostro esempio otteniamo i seguenti polinomi:
@@ -397,7 +397,7 @@ generare e verificare la prova, le due parti coinvolte, ovvero il verificatore e
 modo bidirezionale. Ad esempio, nel caso della "grotta di Alibaba", Victor, il verificatore, indicava il passaggio da
 intraprendere e Peggy, il dimostratore, che “rispondeva” uscendo dalla giusta direzione. Mentre nel caso dei
 polinomi, il verificatore forniva le coordinate del punto in cui valutare il polinomio e il dimostratore rispondeva con
-la valutazione corretta. In alcune situazioni tuttavia, può risultare vantaggioso utilizzare le cosiddette NIZKP, ovvero
+la valutazione corretta. In alcune situazioni, tuttavia può risultare vantaggioso utilizzare le cosiddette NIZKP, ovvero
 le Non-Interactive Zero-Knowledge proof, in cui il dimostratore trasmette al verificatore una prova contenente tutte le
 informazioni necessarie per la verifica, senza richiedere ulteriori interazioni tra le parti. 
 
@@ -434,7 +434,7 @@ irreversibile e non può essere riprodotta volontariamente, il che garantisce la
     \includegraphics[width=10cm]{./chapters/1.state-of-art/images/11.trusted_setups.png}
     \label{fig:trusted_setups}
     \captionsetup{justification=centering}
-    \caption{immagine generica di una cerimonia di trusted set-up. tratta da \cite{how-do-trusted-setups-work}}
+    \caption{Immagine generica di una cerimonia di trusted set-up, tratta da \cite{how-do-trusted-setups-work}}
 \end{figure}
 
 Se le parti coinvolte non si comportano in modo leale e conservano o pubblicano i loro segreti, la validità della
@@ -462,7 +462,7 @@ In base a queste proprietà, si possono individuare tre gruppi di interesse (non
     \includegraphics[width=10cm]{./chapters/1.state-of-art/images/12.trusted_models.png}
     \label{fig:trusted_models}
     \captionsetup{justification=centering}
-    \caption{immagine modelli di di affidabilità, tratta da \cite{trusted-models}}
+    \caption{Immagine modelli di affidabilità, tratta da \cite{trusted-models}}
 \end{figure}
 
 \subsubsection{MPC (multi-party computation)}
@@ -492,18 +492,18 @@ estremamente performanti sia in termini di tempo che di memoria. Tale tecnologia
 Il trusted set-up su cui si basa Groth16 richiede due fasi distinte:
 \begin{enumerate}
     \item Nella prima fase si applica una procedura di trusted set-up chiamata “power of tau” che consiste in una algoritmo MPC
-    basato sul modello di affidabilità 1-N che utilizzando le curve ellitice permette di generare una CRS. Il processo viene
-    chiamato powers of tau o Pot perchè duarnte le sue fasi vengono usate le potenze di un numero tao generalmente il 2
+    basato sul modello di affidabilità 1-N che utilizzando le curve ellitiche permette di generare una CRS. Il processo viene
+    chiamato powers of tau o Pot perché durante le sue fasi vengono usate le potenze di un numero tao generalmente il 2
     assime ai contributi dei partecipanti per generare punti casuali e ottener una CRS. il numero N di partecipati per una
-    cerimonia di tipo power of tau puo essere dell'ordine del migliaio di partecipanti rendendo cosi la cerimonia molto
-    sicura, in quanto basta che almento uno di essi mantenga il segreto per far si che la CRS rimanga valdia. Questo
+    cerimonia di tipo power of tau può essere dell'ordine del migliaio di partecipanti rendendo cosi la cerimonia molto
+    sicura, in quanto basta che almeno uno di essi mantenga il segreto per far si che la CRS rimanga valida. Questo
     procedimento deve essere svolto una volta sola e deve essere combinato con il processo della fase successiva.
     \begin{figure}[H]
         \centering
         \includegraphics[width=13cm]{./chapters/1.state-of-art/images/13.power_of_tao.png}
         \label{fig:powers_of_tao}
         \captionsetup{justification=centering}
-        \caption{immagine generica di una di power of tau. tratta da \cite{how-do-trusted-setups-work}}
+        \caption{Immagine cerimonia power of tau, tratta da \cite{how-do-trusted-setups-work}}
     \end{figure}
     \item Nella seconda fase invece viene elaborato un trusted set-up dipendente dalla computazione che si vuole provare (o
     meglio dipendete dal circuito). Quindi questa fase deve essere riprodotta dal dimostratore ogni volta che la
@@ -525,5 +525,5 @@ efficienza il che le rende molto più diffuse delle altre tecnologie.
     \includegraphics[width=13cm]{./chapters/1.state-of-art/images/14.diff_zk.png}
     \label{fig:different_zk}
     \captionsetup{justification=centering}
-    \caption{immagine prestazioni di tecnologie NIZKP a confronto. tratta da \cite{non_interactive_zero_knowledge_proof}}
+    \caption{Immagine prestazioni NIZKP a confronto, tratta da \cite{non_interactive_zero_knowledge_proof}}
 \end{figure}

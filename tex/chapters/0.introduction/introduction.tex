@@ -6,7 +6,7 @@
 L’implementazione di strumenti atti a combattere gli attacchi di tipo \textbf{denial of service} (\textbf{DoS}), sono da molto
 tempo materia di studio e di ricerca. Questi attacchi possono rappresentare una minaccia grave, soprattutto quando si
 verificano su servizi cruciali e sensibili. Per tale motivo, negli anni sono state sviluppate molte strategie diverse
-per impedire a singoli o ai gruppi di computer (noti anche come "zombie armies") di attaccare servizi o reti.
+per impedire a singoli o ai gruppi di computer (noti anche come "zombie armies") di attaccare servizi e reti.
 Attualmente una delle metodologie di protezione più comuni agli attacchi DoS è il \textbf{Rate-limiting}, che permette
 di imporre una frequenza massima accettabile, per le richieste, al fine di evitare sovraccarichi e congestionamenti delle
 risorse. In particolare, nei sistemi su larga scala, la limitazione della frequenza rappresenta uno strumento essenziale
@@ -18,8 +18,8 @@ condizione in cui, sulla base di una conoscenza parziale o totale delle interazi
 possibile risalire all'identità dell'utente stesso; permettendo un'interazione con i servizi offerti dalla rete in
 assoluta riservatezza. L'anonimato in rete presenta molteplici vantaggi, soprattutto in contesti in cui la privacy
 costituisce un requisito fondamentale, come ad esempio nelle votazioni o nelle transazioni finanziarie. Inoltre, la
-possibilità di mantenere l'anonimato può rivelarsi altrettanto utile in ambiti più diffusi, come le conversazioni online
-o i social network, garantendo la libertà di espressione e la tutela della propria sfera privata.
+possibilità di mantenere l'anonimato può rivelarsi altrettanto utile in ambiti più diffusi, come nelle conversazioni online
+o sui social network, garantendo la libertà di espressione e la tutela della propria sfera privata.
 
 Tuttavia, l'anonimato in rete presenta anche alcune criticità, tra cui la principale è rappresentata dalla difficoltà di
 controllo. La ragione di questa difficoltà è da individuare nel fatto che le metodologie di sicurezza a livello applicazione (pila ISO/OSI)
@@ -44,7 +44,7 @@ Fasi del protocollo:
     esempio, possono essere costituiti da un profilo su un social network, dall'indirizzo di un portafoglio di
     criptovalute o da un'identità digitale come lo SPID o la CIE.
 
-    Gli stake non vengono conservati dal protocollo. Alla fine della fase di registrazione, il sistma è a conoscenza
+    Gli stake non vengono conservati dal protocollo. Alla fine della fase di registrazione, il sistema è a conoscenza
     unicamente nel fatto che un nuovo utente anonimo che soddisfa le specifiche della registrazione è
     stato aggiunto al servizio. La presenza di uno stake non è strettamente necessaria per la registrazione.
     In effetti, è possibile registrarsi semplicemente creando un codice univoco e fornendolo come identity commitment.
@@ -64,5 +64,5 @@ Fasi del protocollo:
     servizi, o la rivelazione dell'indirizzo del portafoglio criptovalute dell'utente e il sequestro dei fondi.
 \end{itemize}
 Di seguito si cercherà di guardare a tutto tondo le tecnologie e le idee alla base di zk-SNARK e del protocollo RLN.
-Inoltre si mostrerà l'implementazione di un piccolo prototipo che utilizza questo protocollo per evitare il sovraccarico
+Inoltre, si mostrerà l'implementazione di un piccolo prototipo che utilizza questo protocollo per evitare il sovraccarico
 di risorse in un servizio basato su API.
