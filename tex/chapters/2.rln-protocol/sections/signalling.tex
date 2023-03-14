@@ -19,8 +19,8 @@ Vediamo un esempio di funzionamento dell'algoritmo, immaginiamo di voler applica
 identificare i messaggi inviati all'interno di un epoca:
 $$externalNullifier = Poseidon(epoch,rln\_identifier)$$ dove $epoch$ è l'epoca in cui è stato invito il messaggio e
 $rln\_identifier$ è un valore univoco per tutta l'applicazione, questo valore viene utilizzato per proteggere gli utenti
-che utilizzino la stessa chiave private in più servizi che applicano RLN, infatti grazie a questo parametro anche se si
-usasse la stessa chiave privata per costruire il polinomio in applicazioni differenti si otterrebbero valori differenti in fase di valutazione.
+che utilizzino la stessa chiave privata in più servizi che applicano RLN, infatti grazie a questo parametro anche se si
+usasse la stessa chiave privata per costruire il polinomio in applicazioni differenti si otterrebbero valori diversi in fase di valutazione.
 Proseguiamo con l'identificazione del polinomio che dovrà essere ricostruito dal verificatore (il sistema), il polinomio
 in questione dovrà essere di primo grado ($k=1$) in quanto vogliamo che con due richieste ($k+1$ punti) sia possibile
 ricostruirlo

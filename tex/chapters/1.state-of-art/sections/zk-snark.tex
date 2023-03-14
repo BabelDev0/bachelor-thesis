@@ -104,18 +104,18 @@ setup", che verrà approfondita nelle sezioni relativa alle prove non interattiv
 Una dimostrazione di tipo succinct che potremmo tradurre con la parola concisa, è una prova in cui sia la dimensione
 della prova che il tempo necessario per verificarla crescono molto più lentamente rispetto alla computazione da
 verificare. Ad esempio se Peggy volesse provare a Victor di possedere un array composto da un milione di elementi, dove
-ogni elemento è uguale all’indice dell’array più uno.
+ogni elemento è uguale all’indice dell’array più uno
 
 \begin{equation}
 a = [1,2,3,...,1000000]
 \end{equation}
 
-Una prova di tipo succinct, così come definita, non può essere realizzata attraverso un processo di controllo "uno per
+una prova di tipo succinct, così come definita, non può essere realizzata attraverso un processo di controllo "uno per
 uno" degli elementi dell'array. Questo perché, se così fosse, si otterrebbe un processo che richiederebbe tanto tempo e
 spazio di memoria quanto il calcolo effettuato per generare l'array. Una possibile miglioria rispetto al calcolo puntuale
 potrebbe essere quella di campionare l'array in un punto casuale e controllare se l'elemento selezionato rispetta la
 regola. \\
-Dopo un singolo campionamento, il grado di fiducia di Victor rispetto ad Peggy sarebbe di soli 0,0001\%, ovvero un
+Dopo un singolo campionamento, il grado di fiducia di Victor rispetto a Peggy sarebbe di solo 0,0001\%, ovvero un
 milionesimo. Se in uno qualsiasi dei campionamenti effettuati Victor dovesse prelevare un numero non congruo, la
 dimostrazione verrebbe invalidata completamente, senza bisogno di ulteriori controlli. È possibile aumentare il grado di
 fiducia del verificatore eseguendo più controlli, ma anche in questo caso, le prove generate da dimostratori disonesti
@@ -185,7 +185,7 @@ La conseguenza del lemma, è che la probabilità di trovare una radice del polin
 campo è inferiore o uguale al rapporto tra il grado del polinomio e la cardinalità del gruppo di elementi selezionati.
 Operazione di rapporto che risulta molto più veloce da calcolare di un controllo puntuale. Inoltre, se decidessimo di ripetere il processo di
 selezione degli $r_1,...,r_n \in S$ un numero k di volte otterremo che la probabilità che $p(r^k_1,...,r^k_n) = 0$
-sarebbe obbligatoriamente $\le \ (d/|S|)^k$  e per valori di $S$ abbastanza grandi il il rapporto tende molto velocemente
+sarebbe obbligatoriamente $\le \ (d/|S|)^k$  e per valori di $S$ abbastanza grandi il rapporto tende molto velocemente
 a 0. Intuitivamente il lemma ci dimostra che se un'equazione che coinvolge alcuni polinomi è vera in una coordinata
 selezionata arbitrariamente, allora è quasi certamente vera per i polinomio nel suo insieme.
 
@@ -343,7 +343,7 @@ ovvero la QAP (Quadratic Arithmetic Programs), utilizzeremo un compilatore scrit
         1\
         \end{bmatrix}
     \end{gather*}
-    grazie a questa formato ora se volessimo verificando i vincoli tramite la formula precedente avremmo
+    grazie a questo formato ora se volessimo verificare i vincoli tramite la formula precedente avremmo
     
     $$
     A(x)*B(x)-C(x)=P(x)
@@ -413,7 +413,7 @@ al rispetto delle regole.
 A tal fine, si utilizza una tecnica nota come "trusted set-up" che consente di generare una Common Reference String
 (CRS), ovvero un dato pubblico conosciuto sia dal dimostratore che dal verificatore usato per aggiungere casualità
 all’interno della generazione della prova. Sempre riferendoci ai due esempi precedenti, la CRS ottenuta tramite un
-trusted set-up consentirebbe di rendere le scelte di Victor nella caverna il più casuali possibile, impedendo ad Peggy
+trusted set-up consentirebbe di rendere le scelte di Victor nella caverna le più casuali possibile, impedendo a Peggy
 di individuare dei pattern o a entrambi di collaborare per ingannare un terzo osservatore e nel caso dei polinomi,
 invece, consentirebbe di rendere aleatoria la scelta del punto in cui valutare il polinomio. 
 
@@ -491,10 +491,10 @@ estremamente performanti sia in termini di tempo che di memoria. Tale tecnologia
 
 Il trusted set-up su cui si basa Groth16 richiede due fasi distinte:
 \begin{enumerate}
-    \item Nella prima fase si applica una procedura di trusted set-up chiamata “power of tau” che consiste in una algoritmo MPC
+    \item Nella prima fase si applica una procedura di trusted set-up chiamata “power of tau” che consiste in un algoritmo MPC
     basato sul modello di affidabilità 1-N che utilizzando le curve ellitiche permette di generare una CRS. Il processo viene
-    chiamato powers of tau o Pot perché durante le sue fasi vengono usate le potenze di un numero tao generalmente il 2
-    assime ai contributi dei partecipanti, per generare punti casuali e ottener una CRS. il numero N di partecipati per una
+    chiamato powers of tau o Pot perché durante le sue fasi vengono usate le potenze di un numero tao generalmente il 2,
+    assieme ai contributi dei partecipanti, per generare punti casuali e ottenere una CRS. il numero N di partecipati per una
     cerimonia di tipo power of tau può essere dell'ordine del migliaio rendendo cosi la cerimonia molto
     sicura, in quanto basta che almeno uno di essi mantenga il segreto per far si che la CRS rimanga valida. Questo
     procedimento deve essere svolto una volta sola e deve essere combinato con il processo della fase successiva.

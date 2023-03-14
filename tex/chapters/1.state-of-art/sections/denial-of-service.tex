@@ -10,7 +10,7 @@ la quale grazie all’attivazione di un rate-limiter è stata in grado di contra
 DDoS a livello applicativo mai registrato. Tale attacco, proveniente da oltre 5.256 sorgenti IP dislocate in 132 paesi
 differenti, ha raggiunto il picco di 46 milioni di richieste al secondo. 
 
-In generale, un una regola per il rate-limiting consiste in un semplice conteggio delle occorrenze delle richieste in un
+In generale, una regola per il rate-limiting consiste in un semplice conteggio delle occorrenze delle richieste in un
 lasso di tempo. Tuttavia, esistono diverse tecniche per misurare e limitare la frequenza di tali richieste, ognuna con i
 propri usi e implicazioni.
 \begin{itemize}
@@ -20,7 +20,7 @@ propri usi e implicazioni.
     modo uniforme all'interno della finestra temporale. Ciò significa che, una volta raggiunto il limite massimo di
     richieste consentite, l'utente o l'applicazione deve attendere il termine della finestra temporale per poter inviare
     nuove richieste. Uno svantaggio significativo di questa strategia è la possibile concentrazione di richieste tutte in
-    una porzione della finestra, rischiando un sovraccarico del servizio. Caso notevole è il caso in cui si concentrino tutte
+    una porzione della finestra, rischiando un sovraccarico del servizio. Caso notevole è quello in cui si concentrino tutte
     le richieste di una finestra al margine della fine e tutte le richieste della finestra successiva al margine dell’inizio
     questo comporta che il sistema in una durata equivalente a quella della finestra, gestisca il doppio delle richieste
     consentite.
