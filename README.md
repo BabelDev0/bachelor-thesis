@@ -82,6 +82,11 @@ Circom 2 GitHub repository
 
 - [RLN Docs](https://rate-limiting-nullifier.github.io/rln-docs/rln.html)
 - [32/RLN Vac RFC](https://rfc.vac.dev/spec/32/)
+- [Decentralised CloudFlare - using RLN and rich user identities](https://ethresear.ch/t/decentralised-cloudflare-using-rln-and-rich-user-identities/10774)
+- [Rate Limiting Nullifier: A spam-protection mechanism for anonymous environments](https://mirror.xyz/privacy-scaling-explorations.eth/aKjLmLVyunELnGObrzPlbhXWu5lZI9QU-P3OuBK8mOY)
+- [RLN spec (canonical Poseidon + IncrementalQuinTree)](https://hackmd.io/@aeAuSD7mSCKofwwx445eAQ/BJcfDByNF)
+- [Rate Limiting Nullifier: A spam-protection mechanism for anonymous environments](https://medium.com/privacy-scaling-explorations/rate-limiting-nullifier-a-spam-protection-mechanism-for-anonymous-environments-bbe4006a57d)
+- [Semaphore RLN, rate limiting nullifier for spam prevention in anonymous p2p setting](https://ethresear.ch/t/semaphore-rln-rate-limiting-nullifier-for-spam-prevention-in-anonymous-p2p-setting/5009)
 
 ### 📃 Paper
 
@@ -106,7 +111,6 @@ Circom 2 GitHub repository
 - [Shamir's secret sharing](https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing)
 - [Merkle tree](https://en.wikipedia.org/wiki/Merkle_tree)
 - [Schwartz–Zippel lemma](https://en.wikipedia.org/wiki/Schwartz%E2%80%93Zippel_lemma)
--
 
 ### ✏️ Ispiration
 
