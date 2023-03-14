@@ -52,6 +52,8 @@ This thesis was written for my bachelor's degree in computer engineering at the 
                     (docs)
                 </a>
             </td>
+            <td>
+            </td>
         </tr>
         <tr>
             <td>
