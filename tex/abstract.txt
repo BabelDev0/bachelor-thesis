@@ -1,0 +1,5 @@
+La tesi discute l'implementazione di strumenti per combattere gli attacchi Denial of Service (DoS) in ambienti anonimi
+utilizzano la tecnologia zk-SNARK. Nello specifico il documento studia e discute un protocollo chiamato RLN
+(Rate-Limiting Nullifier) che utilizza la tecnologia zk-SNARK per applicare regole di rate-limiting in abiente anonimo.
+La tesi conclude mostando un prototipo di funzionamento di un applicazione Client Server che sfrutta il protocollo RLN
+ne conclude che può esserre efficacemente applciato per contrastare attacchi DoS in ambienti anonimi.
