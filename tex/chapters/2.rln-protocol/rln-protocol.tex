@@ -15,7 +15,7 @@ comunicazione peer-to-peer privacy-preserving in ambiente decentralizzato.
 
 Nelle prossime sezioni, verranno dettagliate le fasi del protocollo e le tecnologie utilizzate. Tuttavia, prima di
 addentrarci, potrebbe essere utile fornire una descrizione generale e concisa del protocollo per comprendere meglio dove
-e perché vengono impiegate le tecnologie che andremo a esaminare. Il protocollo RLN è suddiviso in tre fasi. Descriveremo brevemente le prime due fasi, in quanto la terza diventa ovvia una volta compreso il funzionamento delle prime.
+e perché vengono impiegate le tecnologie che andremo a esaminare. Il protocollo RLN è suddiviso in tre fasi. Descriveremo brevemente le prime due, in quanto la terza diventa ovvia una volta compreso il funzionamento delle prime.
 
 \textbf{Regitrazione}: Questa fase consente agli utenti di registrarsi al servizio che utilizza il protocollo RLN. In
 particolare, agli utenti viene richiesto di generare una chiave privata che rappresenta il loro segreto. Le strategie
@@ -31,7 +31,13 @@ of membership". Al fine di limitare gli attacchi DoS o Sybil, la fase di registr
 subordinata al rispetto di determinate specifiche, di difficile riproducibilità da parte degli utenti. Per questo, in
 alcuni casi, è possibile legare la chiave privata a una stake.
 
-\textbf{Interazione}: Questa fase rappresenta sia quella che consente l'interazione tra gli utenti registrati e il sistema, sia quella che implementa la regola di rate limiting. La chiave privata dell'utente, prima che interagisca con il sistema, viene suddivisa in $n$ parti in modo che ad ogni interazione il sistema riveli all'utente solo una porzione della chiave. Il sistema non sarà in grado di ricostruire la chiave privata dell'utente dalle singole porzioni, a meno che queste non raggiungano un numero $k$ stabilito dalla regola di rate limiting. In caso contrario, se il sistema dispone di k parti della chiave, è in grado di ricavare l'identità dell'utente. Questo processo è attuabile grazie ad un algoritmo basato sull'interpolazione di Lagrange, chiamato Shamir Secret Sharing (SSS).
+\textbf{Interazione}: Questa fase rappresenta sia quella che consente l'interazione tra gli utenti registrati e il
+sistema, sia quella che implementa la regola di rate limiting. La chiave privata dell'utente, prima che interagisca con
+il sistema, viene suddivisa in $n$ parti in modo che ad ogni interazione l'utente riveli al sistema solo una porzione
+della chiave. Il sistema non sarà in grado di ricostruire la chiave privata dell'utente dalle singole porzioni, a meno
+che queste non raggiungano un numero $k$ stabilito dalla regola di rate limiting. In caso contrario, se il sistema
+dispone di k parti della chiave, è in grado di ricavare l'identità dell'utente. Questo processo è attuabile grazie ad un
+algoritmo basato sull'interpolazione di Lagrange, chiamato Shamir Secret Sharing (SSS).
 \input{chapters/2.rln-protocol/sections/tools.tex}
 
 Dopo aver visto le tecnologie utilizzate nel protocollo RLN, è possibile procedere con la descrizione delle sue fasi.

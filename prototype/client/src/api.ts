@@ -94,7 +94,7 @@ const options = async () => {
 
 	for (let i = 0; i < n; i++) {
 		const signalVerificationStatus = await interact(
-			'This is a DoS attack' + i,
+			signal === 'dos' ? 'This is a DoS attack' + i : signal,
 			externalNullifier
 		);
 		console.log('Server response: ', signalVerificationStatus);
