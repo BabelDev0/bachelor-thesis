@@ -6,7 +6,9 @@ const main = async () => {
 		const userRegistrationStatus = await register();
 		console.log('Server response: ', userRegistrationStatus);
 
-		const userOptions = await options();
+		for (; ;) {
+			const userOptions = await options();
+		}
 	} catch (error) {
 		throw new Error(error);
 	}
