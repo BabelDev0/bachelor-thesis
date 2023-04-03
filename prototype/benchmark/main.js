@@ -1,10 +1,9 @@
 import { RLN, Registry, Cache, genExternalNullifier } from 'rlnjs';
 import * as path from 'path';
 import * as fs from 'fs';
-import poseidon from 'poseidon-lite';
 
 const bench = async (depth) => {
-	console.log('START' + depth);
+	console.log('START ' + depth);
 	const zkeyFilesPath = './zkeyFiles' + depth.toString();
 	const vkeyPath = path.join(zkeyFilesPath, 'verification_key.json');
 	const vKey = JSON.parse(fs.readFileSync(vkeyPath, 'utf-8'));
@@ -17,46 +16,54 @@ const bench = async (depth) => {
 	registry.addMember(identityCommitment);
 
 	const cache = new Cache(rlnInstance.rlnIdentifier);
-	const epoch = genExternalNullifier('t');
-	const signal = 't';
+	const epoch = genExternalNullifier('test');
+	const signal = 'test';
 
-	const startP = Date.now();
-	let start = Date.now();
+	const startP = performance.now();
+	// test merkle proof generation
+	let start = performance.now();
 	const merkleProof = registry.generateMerkleProof(identityCommitment);
-	let end = Date.now();
-	console.log('merkleProof time: ' + (end - start) / 1000 + 's');
+	let end = performance.now();
 
-	start = Date.now();
+	// test rln proof generation
+	start = performance.now();
 	const proof = await rlnInstance.generateProof(signal, merkleProof, epoch);
-	end = Date.now();
-	console.log('rln proof time: ' + (end - start) / 1000 + 's');
-	const endP = Date.now();
-	console.log('rln full proof time: ' + (endP - startP) / 1000 + 's');
+	end = performance.now();
+	const endP = performance.now();
 
-	const startV = Date.now();
-	start = Date.now();
+	console.log('merkleProof time: ' + (end - start) + ' ms');
+	console.log('rln proof time: ' + (end - start) + ' ms');
+	console.log('rln full proof time: ' + (endP - startP) + ' ms');
+
+	const startV = performance.now();
+	// test root verification
+	start = performance.now();
 	const rootCheck = registry.root === proof.publicSignals.root;
-	end = Date.now();
-	console.log('verify root time: ' + (end - start) / 1000 + 's');
+	end = performance.now();
 
-	start = Date.now();
+	// test banned verification
+	start = performance.now();
 	const bannedCheck = registry.slashedMembers.includes(identityCommitment);
-	end = Date.now();
-	console.log('verify banned time: ' + (end - start) / 1000 + 's');
+	end = performance.now();
 
-	start = Date.now();
+	// test proof verification
+	start = performance.now();
 	const proofVerify = await RLN.verifyProof(vKey, proof);
-	end = Date.now();
-	console.log('verify validity time: ' + (end - start) / 1000 + 's');
+	end = performance.now();
 
+	// test breach verification
 	let result = cache.addProof(proof);
 	const breachCheck = result.status === 'breach';
-	end = Date.now();
-	console.log('verify breach time: ' + (end - start) / 1000 + 's');
-	const endV = Date.now();
-	console.log('rln full verification time: ' + (endV - startV) / 1000 + 's');
+	end = performance.now();
 
-	console.log('END' + depth);
+	const endV = performance.now();
+	console.log('verify root time: ' + (end - start) + ' ms');
+	console.log('verify banned time: ' + (end - start) + ' ms');
+	console.log('verify validity time: ' + (end - start) + ' ms');
+	console.log('verify breach time: ' + (end - start) + ' ms');
+	console.log('rln full verification time: ' + (endV - startV) + ' ms');
+
+	console.log('END ' + depth);
 };
 
 const main = async () => {
