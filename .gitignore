@@ -2,3 +2,4 @@ node_modules
 rln-circuits
 dist
 rlnjs
+.DS_Store
